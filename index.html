@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marco & Benedetta — 28.08.2027</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="site-nav" id="siteNav">
+  <a href="#" class="logo" onclick="go('home');return false;"><b>M</b> &amp; <b>B</b></a>
+  <nav class="links" id="navLinks">
+    <a href="#" data-p="home" onclick="go('home');return false;">Home</a>
+    <a href="#" data-p="celebration" onclick="go('celebration');return false;">Wedding Celebration</a>
+    <a href="#" data-p="info" onclick="go('info');return false;">Info utili</a>
+    <a href="#" data-p="song" onclick="go('song');return false;">Scegli una canzone</a>
+    <a href="#" data-p="rsvp" onclick="go('rsvp');return false;">Conferma partecipazione</a>
+    <a href="#" data-p="stay" onclick="go('stay');return false;">Accommodation</a>
+    <a href="#" data-p="gift" onclick="go('gift');return false;">Gift</a>
+  </nav>
+  <button class="burger" id="burgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+</header>
+<div class="menu-backdrop" id="menuBackdrop"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="menu-close" id="menuCloseBtn" aria-label="Chiudi menu">✕</button>
+  <a href="#" data-p="home" onclick="go('home');return false;">Home</a>
+  <a href="#" data-p="celebration" onclick="go('celebration');return false;">Wedding Celebration</a>
+  <a href="#" data-p="info" onclick="go('info');return false;">Info utili</a>
+  <a href="#" data-p="song" onclick="go('song');return false;">Scegli una canzone</a>
+  <a href="#" data-p="rsvp" onclick="go('rsvp');return false;">Conferma partecipazione</a>
+  <a href="#" data-p="stay" onclick="go('stay');return false;">Accommodation</a>
+  <a href="#" data-p="gift" onclick="go('gift');return false;">Gift</a>
+  <a href="#" class="admin-link" onclick="go('admin');return false;">Area riservata</a>
+</div>
+
+<!-- ============ HOME ============ -->
+<section class="page active" id="page-home">
+  <div class="hero">
+    <div class="slide slide-1 active" data-edit-img="hero-slide-1"><div class="art"></div><div class="grain"></div><div class="logo-mono"><div class="lm-row"><span class="lm-part lm-m">M</span><span class="lm-part lm-amp">&amp;</span><span class="lm-part lm-b">B</span></div><div class="lm-line"></div></div><div class="tint"></div></div>
+    <div class="slide slide-2" data-edit-img="hero-slide-2"><div class="art"></div><div class="grain"></div><div class="logo-mono"><div class="lm-row"><span class="lm-part lm-m">M</span><span class="lm-part lm-amp">&amp;</span><span class="lm-part lm-b">B</span></div><div class="lm-line"></div></div><div class="tint"></div></div>
+    <div class="slide slide-3" data-edit-img="hero-slide-3"><div class="art"></div><div class="grain"></div><div class="logo-mono"><div class="lm-row"><span class="lm-part lm-m">M</span><span class="lm-part lm-amp">&amp;</span><span class="lm-part lm-b">B</span></div><div class="lm-line"></div></div><div class="tint"></div></div>
+    <div class="slide slide-4" data-edit-img="hero-slide-4"><div class="art"></div><div class="grain"></div><div class="logo-mono"><div class="lm-row"><span class="lm-part lm-m">M</span><span class="lm-part lm-amp">&amp;</span><span class="lm-part lm-b">B</span></div><div class="lm-line"></div></div><div class="tint"></div></div>
+    <div class="hero-content">
+      <span class="eyebrow reveal-word" style="animation-delay:.15s">Sono felici di invitarti al loro matrimonio</span>
+      <h1><span class="hero-word" style="animation-delay:.3s">Marco</span> <em class="hero-word" style="animation-delay:.45s">&amp;</em><br><span class="hero-word" style="animation-delay:.6s">Benedetta</span></h1>
+      <div class="hero-meta reveal-word" style="animation-delay:.85s">
+        <span class="date-badge">28 agosto 2027 · ore 16:30</span>
+        <span class="place">Chiesa di Sant'Antonio a Posillipo, Napoli</span>
+      </div>
+    </div>
+    <div class="slide-dots" id="slideDots"></div>
+    <div class="scroll-cue"><span class="line"></span>Scorri</div>
+  </div>
+
+  <div class="wrap intro reveal">
+    <span class="amp">A seguire</span>
+    <p class="lead">festeggeremo insieme a Villa Vittoria, Posillipo.<br>Vi aspettiamo.</p>
+    <div class="countdown" id="countdown">
+      <div class="unit"><span class="num" id="cd-d">–</span><span class="lab">giorni</span></div>
+      <div class="unit"><span class="num" id="cd-h">–</span><span class="lab">ore</span></div>
+      <div class="unit"><span class="num" id="cd-m">–</span><span class="lab">minuti</span></div>
+      <div class="unit"><span class="num" id="cd-s">–</span><span class="lab">secondi</span></div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="teaser-row reveal">
+      <div class="teaser-media" data-edit-img="teaser-celebration"><div class="art-ph ph-1"></div></div>
+      <div class="teaser-text">
+        <span class="eyebrow">01 — Wedding Celebration</span>
+        <div data-edit="teaser-celebration-text">
+          <h3>Ok, lo facciamo davvero.</h3>
+          <p>Il 28 agosto ci sposiamo: scopri come vivremo questa giornata, dalla cerimonia alla festa.</p>
+        </div>
+        <a href="#" class="btn" onclick="go('celebration');return false;">Scopri</a>
+      </div>
+    </div>
+
+    <div class="teaser-row reverse reveal">
+      <div class="teaser-media" data-edit-img="teaser-info"><div class="art-ph ph-2"></div></div>
+      <div class="teaser-text">
+        <span class="eyebrow">02 — Info utili</span>
+        <div data-edit="teaser-info-text">
+          <h3>Tutto quello che ti serve sapere.</h3>
+          <p>Il programma della giornata, il dress code e come raggiungere chiesa e location.</p>
+        </div>
+        <a href="#" class="btn" onclick="go('info');return false;">Scopri</a>
+      </div>
+    </div>
+
+    <div class="teaser-row reveal">
+      <div class="teaser-media" data-edit-img="teaser-song"><div class="art-ph ph-3"></div></div>
+      <div class="teaser-text">
+        <span class="eyebrow">03 — Scegli una canzone</span>
+        <div data-edit="teaser-song-text">
+          <h3>C'è una canzone che ti fa pensare a noi?</h3>
+          <p>Faccela ascoltare: entrerà a far parte della colonna sonora della nostra festa.</p>
+        </div>
+        <a href="#" class="btn" onclick="go('song');return false;">Scopri</a>
+      </div>
+    </div>
+
+    <div class="teaser-row reverse reveal">
+      <div class="teaser-media" data-edit-img="teaser-rsvp"><div class="art-ph ph-4"></div></div>
+      <div class="teaser-text">
+        <span class="eyebrow">04 — Conferma partecipazione</span>
+        <div data-edit="teaser-rsvp-text">
+          <h3>Ci sei?</h3>
+          <p>Facci sapere se ci sarai, entro il 15 giugno 2027, così possiamo organizzare tutto al meglio.</p>
+        </div>
+        <a href="#" class="btn" onclick="go('rsvp');return false;">Scopri</a>
+      </div>
+    </div>
+
+    <div class="teaser-row reveal">
+      <div class="teaser-media" data-edit-img="teaser-stay"><div class="art-ph ph-5"></div></div>
+      <div class="teaser-text">
+        <span class="eyebrow">05 — Accommodation</span>
+        <div data-edit="teaser-stay-text">
+          <h3>Vieni da fuori?</h3>
+          <p>Ti aiutiamo a organizzare il soggiorno: raccontaci le tue esigenze.</p>
+        </div>
+        <a href="#" class="btn" onclick="go('stay');return false;">Scopri</a>
+      </div>
+    </div>
+
+    <div class="teaser-row reverse reveal">
+      <div class="teaser-media" data-edit-img="teaser-gift"><div class="art-ph ph-6"></div></div>
+      <div class="teaser-text">
+        <span class="eyebrow">06 — Gift</span>
+        <div data-edit="teaser-gift-text">
+          <h3>Il regalo più grande è avervi con noi.</h3>
+          <p>Se desiderate comunque farci un pensiero, qui trovate come contribuire al nostro viaggio dei sogni.</p>
+        </div>
+        <a href="#" class="btn" onclick="go('gift');return false;">Scopri</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap reveal" style="text-align:center; padding:100px 0 60px;">
+    <div style="border:1px dashed var(--line); padding:60px 30px; max-width:520px; margin:0 auto;">
+      <span class="eyebrow">Partecipazione</span>
+      <p style="margin:0;">Qui troverà spazio l'illustrazione della partecipazione cartacea, con il testo dedicato — da inserire appena disponibili.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WEDDING CELEBRATION ============ -->
+<section class="page" id="page-celebration">
+  <div class="wrap" style="padding-top:150px; max-width:760px;">
+    <div class="section-head reveal" data-edit="celebration-heading">
+      <span class="eyebrow">Wedding Celebration</span>
+      <h2>Ok, lo facciamo davvero.</h2>
+    </div>
+
+    <div class="reveal photo-placeholder" data-edit-img="celebration-photo" style="margin:10px 0 60px; border:1px dashed var(--line); aspect-ratio:4/3; max-width:520px; display:flex; align-items:center; justify-content:center; text-align:center; padding:30px;">
+      <div class="ph-inner">
+        <span class="eyebrow" style="margin-bottom:8px;">Foto</span>
+        <p style="margin:0;">Foto degli sposi — spontanea e simpatica, non troppo impostata<br>(da inserire)</p>
+      </div>
+    </div>
+
+    <div class="reveal" data-edit="celebration-story" style="max-width:620px;">
+      <p>Il <em>28 agosto 2027</em> ci sposiamo.</p>
+      <p>Inizieremo il pomeriggio a <em>Sant'Antonio a Posillipo</em>, per vivere insieme il momento in cui finalmente diremo sì.</p>
+      <p>Dopo la cerimonia ci sposteremo a <em>Villa Vittoria</em>, dove continueremo a festeggiare insieme fino a sera.</p>
+      <p>Abbiamo immaginato una giornata fatta di persone che amiamo, buon cibo, musica e soprattutto tanta voglia di stare insieme.</p>
+      <p>Dopo il primo momento tutti insieme, continueremo con la cena e poi lasceremo che la serata faccia il suo corso.</p>
+      <p>Abbiamo scelto di vivere questa giornata con semplicità, lasciandoci guidare da quello che per noi conta davvero: <em>stare insieme alle persone che amiamo, condividere una giornata di gioia e divertirci tutti insieme.</em></p>
+      <p>Vogliamo semplicemente una festa bella, spontanea e piena di momenti da ricordare.</p>
+      <p>E soprattutto vorremmo che ve la godeste insieme a noi, dall'inizio alla fine.</p>
+      <p>Il resto ve lo raccontiamo il 28 agosto.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INFO UTILI ============ -->
+<section class="page" id="page-info">
+  <div class="wrap" style="padding-top:150px;">
+    <div class="section-head reveal" data-edit="info-heading">
+      <span class="eyebrow">Prima di partire</span>
+      <h2>Informazioni utili</h2>
+    </div>
+
+    <!-- LA GIORNATA -->
+    <div class="reveal" style="margin-bottom:100px;">
+      <div class="section-head" style="margin-bottom:30px;"><span class="eyebrow">La giornata</span></div>
+      <div class="day-list">
+        <div class="day-item reveal" data-edit="info-day-1"><span class="day-time">16:30</span><span class="day-what">Cerimonia<small>Chiesa di Sant'Antonio a Posillipo</small></span></div>
+        <div class="day-item reveal" data-edit="info-day-2"><span class="day-time">18:00</span><span class="day-what">Villa Vittoria<small>Inizia la festa</small></span></div>
+        <div class="day-item reveal" data-edit="info-day-3"><span class="day-time">A seguire</span><span class="day-what">Cena</span></div>
+        <div class="day-item reveal" data-edit="info-day-4"><span class="day-time">E poi...</span><span class="day-what">Si continua a festeggiare</span></div>
+      </div>
+      <p data-edit="info-day-note" style="margin-top:26px;">Non vogliamo raccontarvi proprio tutto. Qualcosa è meglio viverla direttamente.</p>
+    </div>
+
+    <!-- DRESS CODE -->
+    <div class="reveal" data-edit="info-dresscode" style="margin-bottom:110px; max-width:640px;">
+      <div class="section-head" style="margin-bottom:20px;"><span class="eyebrow">Dress code</span><h2 style="font-size:26px;">Eleganti, ma a modo vostro.</h2></div>
+      <p>Non abbiamo scelto colori obbligatori e non ci interessa creare una palette da rispettare.</p>
+      <p>È pur sempre una <em>serata di festa</em>, quindi ci farà piacere vedervi eleganti e con il vostro stile. Ma soprattutto vogliamo che vi sentiate bene.</p>
+      <p>Se pensate che durante la serata avrete voglia di ballare, scatenarvi o semplicemente stare più comodi, <em>portate tranquillamente un ricambio</em>. Una seconda scarpa, una camicia più easy, una T-shirt: quello che vi fa stare meglio.</p>
+      <p>L'obiettivo è arrivare eleganti e finire la serata comodi e felici.</p>
+    </div>
+
+    <!-- COME ARRIVARE ALLA CERIMONIA -->
+    <div class="section-head reveal" style="margin-bottom:34px;">
+      <span class="eyebrow">Come arrivare alla cerimonia</span>
+      <h2 style="font-size:28px;">Chiesa di Sant'Antonio a Posillipo</h2>
+    </div>
+    <div class="church-grid reveal" style="margin-bottom:40px;">
+      <div class="church-card">
+        <span class="k">Indirizzo</span>
+        <p data-edit="info-church-address" style="margin-top:8px;">Via Minucio Felice, 13 — Napoli</p>
+        <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Via+Minucio+Felice,+13,+Napoli" target="_blank" rel="noopener">Apri su Google Maps</a>
+      </div>
+      <div class="map-box">
+        <iframe class="map-frame" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps?q=Via+Minucio+Felice,13,Napoli&output=embed"></iframe>
+      </div>
+    </div>
+    <div class="reveal" data-edit="info-church-tip" style="max-width:640px; margin-bottom:44px;">
+      <span class="label-italic">Un piccolo consiglio per non perdervi</span>
+      <p style="margin-top:8px;">Arrivati nei pressi della chiesa, <em>seguite la stradina subito sulla destra: troverete le indicazioni per Sant'Antonio.</em> È facile non vederla, quindi occhio!</p>
+    </div>
+    <div class="reveal" style="max-width:640px; margin-bottom:120px;">
+      <div data-edit="info-church-parking">
+        <span class="label-italic">Dove parcheggiare</span>
+        <p style="margin-top:8px;">Nei pressi della chiesa è presente <em>un'area di sosta con posti limitati</em>, dove potrete lasciare l'auto.</p>
+        <p>In alternativa, per chi preferisce un parcheggio custodito:</p>
+        <p><strong>Orazio Service</strong><br>Via Orazio 96/A — Napoli<br><em>Parcheggio custodito, aperto 24 ore su 24.</em></p>
+      </div>
+      <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Orazio+Service,+Via+Orazio+96,+Napoli" target="_blank" rel="noopener">Apri su Google Maps</a>
+    </div>
+
+    <!-- COME ARRIVARE A VILLA VITTORIA -->
+    <div class="section-head reveal" style="margin-bottom:34px;">
+      <span class="eyebrow">Come arrivare al ricevimento</span>
+      <h2 style="font-size:28px;">Villa Vittoria</h2>
+    </div>
+    <div class="church-grid reveal" style="margin-bottom:40px;">
+      <div class="church-card">
+        <span class="k">Indirizzo</span>
+        <p data-edit="info-villa-address" style="margin-top:8px;">Posillipo — Napoli</p>
+        <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Villa+Vittoria,+Posillipo,+Napoli" target="_blank" rel="noopener">Apri su Google Maps</a>
+      </div>
+      <div class="map-box">
+        <iframe class="map-frame" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps?q=Villa+Vittoria,Posillipo,Napoli&output=embed"></iframe>
+      </div>
+    </div>
+    <div class="reveal" data-edit="info-villa-parking" style="max-width:640px;">
+      <span class="label-italic">Per chi arriva in macchina</span>
+      <p style="margin-top:8px;">Il parcheggio sarà <em>su strada, in Via Petrarca, nei pressi della Villa</em>.</p>
+      <p>Per tutta la serata sarà presente <em>una persona dello staff di Villa Vittoria</em>, che vi aiuterà a trovare posto e vi darà le indicazioni necessarie.</p>
+      <p>Una volta parcheggiata l'auto, <em>verrete accompagnati fino alla struttura</em>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SCEGLI UNA CANZONE ============ -->
+<section class="page" id="page-song">
+  <div class="wrap" style="padding-top:150px; max-width:720px;">
+    <div class="section-head reveal" data-edit="song-heading">
+      <span class="eyebrow">Scegli una canzone</span>
+      <h2>C'è una canzone che ti fa pensare a noi?</h2>
+      <p style="margin-top:18px;">O magari una che ti piacerebbe semplicemente sentire durante la nostra festa? Faccelo sapere.</p>
+      <p>Se la ascolterai durante la nostra festa, raggiungici e ascoltiamola insieme.</p>
+    </div>
+
+    <form class="form-card reveal" id="songForm">
+      <div class="field"><label>Nome e cognome</label><input type="text" id="s-name" required></div>
+      <div class="field"><label>Canzone</label><input type="text" id="s-title" required></div>
+      <div class="field"><label>Artista</label><input type="text" id="s-artist"></div>
+      <div class="field"><label>Perché proprio questa? (facoltativo)</label><textarea id="s-message"></textarea></div>
+      <button type="submit" class="btn primary">Mandaci la tua canzone</button>
+      <div class="status-msg" id="songStatus"></div>
+    </form>
+    <p class="reveal" id="songCounterNote" style="margin-top:30px; font-size:13px; color:var(--ink-soft); text-align:center;"></p>
+  </div>
+</section>
+
+<!-- ============ CONFERMA PARTECIPAZIONE ============ -->
+<section class="page" id="page-rsvp">
+  <div class="wrap" style="padding-top:150px; max-width:720px;">
+    <div class="section-head reveal" data-edit="rsvp-heading">
+      <span class="eyebrow">Conferma partecipazione</span>
+      <h2>Ci sei?</h2>
+      <p style="margin-top:18px;">Speriamo proprio di sì.<br>Per aiutarci a organizzare tutto al meglio, facci sapere se ci sarai entro il</p>
+      <p style="font-family:var(--font-heading), serif; font-style:italic; font-size:26px; color:var(--accent-deep); margin-top:2px;">15 giugno 2027</p>
+    </div>
+
+    <form class="form-card reveal" id="rsvpForm">
+      <div class="subhead-row"><h4>Ospite principale</h4></div>
+      <div class="field"><label>Nome</label><input type="text" class="g-nome" required></div>
+      <div class="field"><label>Cognome</label><input type="text" class="g-cognome" required></div>
+      <div class="field">
+        <label>Confermi la partecipazione?</label>
+        <div class="radio-row">
+          <label class="pill-choice"><input type="radio" name="g-conf-0" value="Sì" required> Sì, ci sarò</label>
+          <label class="pill-choice"><input type="radio" name="g-conf-0" value="No"> Non potrò esserci</label>
+        </div>
+      </div>
+      <div class="field"><label>Intolleranze o allergie alimentari</label><input type="text" class="g-intoll" placeholder="Es. nessuna, glutine, lattosio…"></div>
+
+      <div id="extraGuests"></div>
+      <button type="button" class="add-guest-btn" id="addGuestBtn">+ Aggiungi partecipante</button>
+
+      <div class="guest-block">
+        <div class="subhead-row"><h4>Bambini</h4></div>
+        <div class="field" style="max-width:220px;">
+          <label>Numero totale bambini</label>
+          <input type="number" id="childCount" min="0" value="0">
+        </div>
+        <div class="field" id="childAgesField" style="display:none;">
+          <label>Età dei bambini</label>
+          <div class="age-inputs" id="childAges"></div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn primary" style="margin-top:10px;">Conferma</button>
+      <div class="status-msg" id="rsvpStatus"></div>
+    </form>
+  </div>
+</section>
+
+<!-- ============ ACCOMMODATION ============ -->
+<section class="page" id="page-stay">
+  <div class="wrap" style="padding-top:150px; max-width:720px;">
+    <div class="section-head reveal" data-edit="stay-heading">
+      <span class="eyebrow">Dove dormire</span>
+      <h2>Vieni da fuori? Pensiamo anche a questo.</h2>
+      <p style="margin-top:18px;">Se arrivi da un'altra città e hai bisogno di una mano per organizzare il tuo soggiorno, faccelo sapere. Stiamo raccogliendo le esigenze dei nostri invitati per capire quante persone avranno bisogno di una sistemazione e valutare le soluzioni migliori, anche attraverso eventuali strutture convenzionate.</p>
+      <p>Per aiutarci a organizzare tutto al meglio, ti chiediamo di compilare il form entro il <strong>30 gennaio 2027</strong>. Dopo questa data potremmo non riuscire a garantire un supporto efficace nella ricerca della sistemazione.</p>
+    </div>
+
+    <form class="form-card reveal" id="stayForm">
+      <div class="field"><label>Nome e cognome</label><input type="text" id="st-name" required></div>
+      <div class="field"><label>Da quale città arrivi?</label><input type="text" id="st-city" required></div>
+
+      <div class="field">
+        <label>Hai già organizzato una sistemazione?</label>
+        <div class="radio-row" style="flex-direction:column; gap:10px; align-items:flex-start;">
+          <label class="pill-choice" style="width:100%;"><input type="radio" name="st-org" value="Sì, ho già organizzato" required> Sì, ho già organizzato</label>
+          <label class="pill-choice" style="width:100%;"><input type="radio" name="st-org" value="No, avrei bisogno di supporto"> No, avrei bisogno di supporto</label>
+          <label class="pill-choice" style="width:100%;"><input type="radio" name="st-org" value="Non ancora, vorrei valutare le opzioni"> Non ancora, vorrei valutare le opzioni</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Per quante persone cerchi una sistemazione?</label>
+        <div class="seg-row">
+          <label class="pill-choice"><input type="radio" name="st-people" value="1"> 1</label>
+          <label class="pill-choice"><input type="radio" name="st-people" value="2"> 2</label>
+          <label class="pill-choice"><input type="radio" name="st-people" value="3"> 3</label>
+          <label class="pill-choice"><input type="radio" name="st-people" value="4+"> 4+</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Quante notti pensi di soggiornare?</label>
+        <div class="radio-row">
+          <label class="pill-choice"><input type="radio" name="st-nights" value="1 notte"> 1 notte</label>
+          <label class="pill-choice"><input type="radio" name="st-nights" value="2 notti"> 2 notti</label>
+          <label class="pill-choice"><input type="radio" name="st-nights" value="3 o più notti"> 3 o più notti</label>
+          <label class="pill-choice"><input type="radio" name="st-nights" value="Non lo so ancora"> Non lo so ancora</label>
+        </div>
+      </div>
+
+      <div class="field" style="display:flex; gap:20px; flex-wrap:wrap;">
+        <div style="flex:1; min-width:180px;"><label>Arrivo</label><input type="date" id="st-arrival"></div>
+        <div style="flex:1; min-width:180px;"><label>Partenza</label><input type="date" id="st-departure"></div>
+      </div>
+
+      <div class="field">
+        <label>Hai già organizzato come spostarti?</label>
+        <div class="radio-row" style="flex-direction:column; gap:10px; align-items:flex-start;">
+          <label class="pill-choice" style="width:100%;"><input type="radio" name="st-transport" value="Sì, sono autonomo/a"> Sì, sono autonomo/a</label>
+          <label class="pill-choice" style="width:100%;"><input type="radio" name="st-transport" value="Non ancora, valuterò le opzioni"> Non ancora, valuterò le opzioni</label>
+          <label class="pill-choice" style="width:100%;"><input type="radio" name="st-transport" value="Avrei bisogno di supporto"> Avrei bisogno di supporto</label>
+        </div>
+      </div>
+
+      <div class="field"><label>Hai esigenze particolari o altre informazioni da segnalarci?</label><textarea id="st-notes"></textarea></div>
+
+      <button type="submit" class="btn primary">Invia richiesta</button>
+      <div class="status-msg" id="stayStatus"></div>
+    </form>
+  </div>
+</section>
+
+<!-- ============ GIFT ============ -->
+<section class="page" id="page-gift">
+  <div class="wrap" style="padding-top:150px;">
+    <div class="gift-card reveal">
+      <div data-edit="gift-heading">
+        <span class="eyebrow">Gift</span>
+        <h2>Il regalo più grande è avervi con noi.</h2>
+        <p style="margin-top:16px;">Davvero.</p>
+        <p>Se però desiderate farci un regalo, potrete contribuire alla realizzazione del nostro viaggio dei sogni.</p>
+      </div>
+      <div class="iban-box">
+        <div class="iban-row"><span class="k">IBAN</span><span class="v" data-edit="gift-iban">Da comunicare</span></div>
+        <div class="iban-row"><span class="k">Intestatario</span><span class="v" data-edit="gift-intestatario">Da comunicare</span></div>
+      </div>
+      <p data-edit="gift-thanks" style="margin-top:40px;">Grazie.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ADMIN (riservato) ============ -->
+<section class="page" id="page-admin">
+  <div class="wrap" style="padding-top:150px;">
+    <div class="gate" id="adminGate">
+      <span class="eyebrow">Area riservata</span>
+      <h2 style="margin-bottom:24px;">Accesso sposi</h2>
+      <div class="field"><input type="text" id="adminCode" placeholder="Codice di accesso"></div>
+      <button class="btn primary" onclick="checkAdmin()">Entra</button>
+      <p class="form-note" style="margin-top:16px;">Codice: sposi2027</p>
+    </div>
+    <div class="admin-panel" id="adminPanel" style="display:none;">
+      <div class="section-head"><span class="eyebrow">Area riservata</span><h2 style="font-size:30px;">Esporta i dati raccolti</h2></div>
+      <div class="admin-row"><div><div>Conferme partecipazione (RSVP)</div><div class="n" id="rsvpCount">–</div></div><button class="btn" onclick="exportData('rsvp')">Esporta Excel</button></div>
+      <div class="admin-row"><div><div>Richieste alloggio</div><div class="n" id="stayCount">–</div></div><button class="btn" onclick="exportData('stay')">Esporta Excel</button></div>
+      <div class="admin-row"><div><div>Canzoni proposte</div><div class="n" id="songCount">–</div></div><button class="btn" onclick="exportData('song')">Esporta Excel</button></div>
+      <div class="status-msg" id="adminStatus"></div>
+
+      <div class="section-head" style="margin-top:70px;"><span class="eyebrow">Design</span><h2 style="font-size:30px;">Editor visivo</h2></div>
+      <p style="max-width:560px;">Modifica testi, foto dello slider, colori e font direttamente sul sito, senza dover chiedere ogni volta una modifica. Attiva la modalità, poi naviga tra le pagine: i testi diventano cliccabili e le foto mostrano un pulsante per sostituirle.</p>
+      <div class="admin-row">
+        <div><div>Modalità modifica</div><div class="n" id="editModeStatus">Disattiva</div></div>
+        <button class="btn primary" id="toggleEditBtn" onclick="toggleEditMode()">Attiva</button>
+      </div>
+      <div class="admin-row">
+        <div><div>Ripristina il design originale</div><div class="n">Rimuove tutte le personalizzazioni salvate</div></div>
+        <button class="btn" onclick="resetSiteConfig()">Ripristina</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EDIT MODE DOCK ============ -->
+<div class="edit-dock" id="editDock">
+  <button class="edit-dock-btn" onclick="openColorPanel()">Colori</button>
+  <button class="edit-dock-btn" onclick="openFontPanel()">Font</button>
+  <span class="edit-dock-status" id="editSaveStatus">Modifiche salvate automaticamente</span>
+  <button class="edit-dock-btn exit" onclick="toggleEditMode()">Esci</button>
+</div>
+
+<div class="edit-panel-overlay" id="colorPanelOverlay">
+  <div class="edit-panel">
+    <button class="modal-close" onclick="closePanels()">×</button>
+    <h3 style="margin-bottom:24px;">Colori del sito</h3>
+    <div class="color-field"><label>Sfondo</label><input type="color" id="pickBg" data-var="--bg"></div>
+    <div class="color-field"><label>Testo (antracite)</label><input type="color" id="pickInk" data-var="--ink"></div>
+    <div class="color-field"><label>Accento principale (rosa)</label><input type="color" id="pickBlue" data-var="--accent"></div>
+    <div class="color-field"><label>Accento scuro / pulsanti</label><input type="color" id="pickBlueDeep" data-var="--accent-deep"></div>
+    <div class="color-field"><label>Accento salvia</label><input type="color" id="pickSage" data-var="--sage"></div>
+    <div class="color-field"><label>Accento senape</label><input type="color" id="pickGold" data-var="--gold"></div>
+    <button class="btn primary" style="margin-top:20px;" onclick="closePanels()">Fatto</button>
+  </div>
+</div>
+
+<div class="edit-panel-overlay" id="fontPanelOverlay">
+  <div class="edit-panel">
+    <button class="modal-close" onclick="closePanels()">×</button>
+    <h3 style="margin-bottom:24px;">Coppia di font</h3>
+    <div class="font-options" id="fontOptions"></div>
+  </div>
+</div>
+
+<footer>© 2026</footer>
+
+<!-- ============ MODAL ============ -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <span class="mk">M &amp; B</span>
+    <h3 id="modalTitle">Grazie!</h3>
+    <p id="modalText">La vostra risposta è stata registrata con affetto.</p>
+    <button class="btn primary" onclick="closeModal()">Chiudi</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

@@ -167,7 +167,7 @@ header.site-nav.on-hero .rsvp-pill:hover{background:#fff; color:var(--accent-dee
 }
 .hero-bg{
   position:absolute; inset:0;
-  background-image:url('images/hero-couple.jpg');
+  background-image:url('hero-couple.jpg');
   background-size:cover; background-position:center;
   animation:kenburns 18s ease forwards;
 }
@@ -226,7 +226,7 @@ header.site-nav.on-hero .rsvp-pill:hover{background:#fff; color:var(--accent-dee
 @media(max-width:840px){.location-teaser{grid-template-columns:1fr; gap:40px; padding:40px 22px 70px;}}
 .location-photo{position:relative; aspect-ratio:4/5; overflow:hidden; background:var(--bg-soft);}
 .location-photo .art-ph{
-  position:absolute; inset:0; background-image:url('images/location-table.jpg');
+  position:absolute; inset:0; background-image:url('location-table.jpg');
   background-size:cover; background-repeat:no-repeat; background-position:center;
 }
 .location-text h2{font-size:clamp(26px,3.4vw,38px); line-height:1.25; margin-bottom:22px; font-weight:400;}

@@ -1,12 +1,22 @@
 /* ============ NAV / ROUTING ============ */
-function go(id){
+let currentPage = 'home';
+function go(id, skipHistory){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
   document.querySelectorAll('nav.links a, .mobile-menu a').forEach(a=>a.classList.toggle('active', a.dataset.p===id));
   closeMobileMenu();
   window.scrollTo({top:0, behavior:'instant' in window ? 'instant' : 'auto'});
   requestAnimationFrame(observeReveals);
+  currentPage = id;
+  updateNavAppearance();
+  if(!skipHistory){
+    history.pushState({page:id}, '', '#'+id);
+  }
 }
+window.addEventListener('popstate', (e)=>{
+  const id = (e.state && e.state.page) || 'home';
+  go(id, true);
+});
 function openMobileMenu(){
   document.getElementById('mobileMenu').classList.add('open');
   document.getElementById('menuBackdrop').classList.add('open');
@@ -18,18 +28,17 @@ function closeMobileMenu(){
 document.getElementById('burgerBtn').addEventListener('click', openMobileMenu);
 document.getElementById('menuCloseBtn').addEventListener('click', closeMobileMenu);
 document.getElementById('menuBackdrop').addEventListener('click', closeMobileMenu);
-window.addEventListener('scroll', ()=>{
-  document.getElementById('siteNav').classList.toggle('solid', window.scrollY>40);
-  const y = window.scrollY;
-  if(y < window.innerHeight){
-    const activeSlide = document.querySelector('.slide.active');
-    if(activeSlide) activeSlide.style.transform = 'translateY('+(y*0.35)+'px)';
-    const mono = document.querySelector('.slide.active .logo-mono');
-    if(mono) mono.style.transform = 'translateY('+(y*0.15)+'px)';
-    const hc = document.querySelector('.hero-content');
-    if(hc){ hc.style.transform = 'translateY('+(y*0.15)+'px)'; hc.style.opacity = Math.max(0, 1-(y/500)); }
-  }
-});
+
+function updateNavAppearance(){
+  const nav = document.getElementById('siteNav');
+  const heroEl = document.querySelector('#page-home .hero');
+  const heroH = heroEl ? heroEl.offsetHeight : 0;
+  const onHero = (currentPage === 'home') && (window.scrollY < heroH - 70);
+  nav.classList.toggle('on-hero', onHero);
+  nav.classList.toggle('solid', !onHero && window.scrollY > 40);
+}
+window.addEventListener('scroll', updateNavAppearance);
+updateNavAppearance();
 
 /* ============ REVEAL ON SCROLL ============ */
 let revealObserver = new IntersectionObserver((entries)=>{
@@ -40,25 +49,6 @@ function observeReveals(){
 }
 observeReveals();
 
-/* ============ HERO SLIDER ============ */
-const slides = document.querySelectorAll('.slide');
-const dotsWrap = document.getElementById('slideDots');
-slides.forEach((s,i)=>{
-  const d = document.createElement('button');
-  if(i===0) d.classList.add('active');
-  d.addEventListener('click', ()=>setSlide(i));
-  dotsWrap.appendChild(d);
-});
-let curSlide=0;
-function setSlide(i){
-  slides[curSlide].classList.remove('active');
-  dotsWrap.children[curSlide].classList.remove('active');
-  curSlide=i;
-  slides[curSlide].classList.add('active');
-  dotsWrap.children[curSlide].classList.add('active');
-}
-setInterval(()=>setSlide((curSlide+1)%slides.length), 5000);
-
 /* ============ COUNTDOWN ============ */
 const WEDDING_DATE = new Date('2027-08-28T16:30:00');
 
@@ -68,7 +58,7 @@ const WEDDING_DATE = new Date('2027-08-28T16:30:00');
    Quando avremo l'URL del Web App, va incollato qui tra le virgolette.
    Finché è vuoto, il sito continua a funzionare normalmente (salva solo
    nel database di Claude / locale). */
-const SHEET_WEBHOOK_URL = '';
+const SHEET_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwbMAEbk4TWpf-aImZXrLmRrEXTXZCRNAiMrAt7f_SH1fLh90Nre4I4XYQknQjcVkGJ/exec';
 const SHEET_TAB_NAMES = { rsvp: 'RSVP', stay: 'Alloggio', song: 'Canzoni' };
 function sendToSheet(type, rows){
   if(!SHEET_WEBHOOK_URL) return; // non ancora collegato: nessuna azione
@@ -172,198 +162,6 @@ async function listRecords(prefix){
     return out;
   }catch(e){ return []; }
 }
-
-/* ============ VISUAL EDITOR ============ */
-const FONT_PAIRS = [
-  {heading:'Fraunces', body:'Work Sans', label:'Fraunces & Work Sans', sub:'Elegante — il font attuale'},
-  {heading:'Cormorant Garamond', body:'Jost', label:'Cormorant Garamond & Jost', sub:'Classico e sottile'},
-  {heading:'Playfair Display', body:'Karla', label:'Playfair Display & Karla', sub:'Editoriale, alto contrasto'},
-  {heading:'EB Garamond', body:'Montserrat', label:'EB Garamond & Montserrat', sub:'Raffinato e tradizionale'},
-  {heading:'Libre Caslon Display', body:'Inter', label:'Libre Caslon Display & Inter', sub:'Moderno e deciso'},
-  {heading:'Bodoni Moda', body:'Manrope', label:'Bodoni Moda & Manrope', sub:'Luxury, alta moda'},
-];
-let siteConfig = {colors:{}, fonts:{}, texts:{}, images:{}};
-let editModeOn = false;
-const loadedFontFamilies = new Set(['Fraunces','Work Sans']);
-
-async function getSiteConfig(){
-  try{
-    const r = await db.get('siteconfig', true);
-    if(r && r.value) return JSON.parse(r.value);
-  }catch(e){}
-  return {colors:{}, fonts:{}, texts:{}, images:{}};
-}
-async function saveSiteConfig(){
-  try{
-    await db.set('siteconfig', JSON.stringify(siteConfig), true);
-    flashSaveStatus('Salvato ✓');
-  }catch(e){
-    flashSaveStatus('Errore nel salvataggio');
-  }
-}
-function flashSaveStatus(msg){
-  const el = document.getElementById('editSaveStatus');
-  if(!el) return;
-  el.textContent = msg;
-  setTimeout(()=>{ el.textContent = 'Modifiche salvate automaticamente'; }, 1800);
-}
-function loadGoogleFont(family){
-  if(loadedFontFamilies.has(family)) return;
-  loadedFontFamilies.add(family);
-  const link = document.createElement('link');
-  link.rel = 'stylesheet';
-  link.href = 'https://fonts.googleapis.com/css2?family='+family.replace(/ /g,'+')+':ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap';
-  document.head.appendChild(link);
-}
-function applySiteConfig(cfg){
-  siteConfig = cfg;
-  Object.entries(cfg.colors||{}).forEach(([k,v])=>{ document.documentElement.style.setProperty(k, v); });
-  if(cfg.fonts && cfg.fonts.heading){
-    loadGoogleFont(cfg.fonts.heading);
-    loadGoogleFont(cfg.fonts.body);
-    document.documentElement.style.setProperty('--font-heading', "'"+cfg.fonts.heading+"'");
-    document.documentElement.style.setProperty('--font-body', "'"+cfg.fonts.body+"'");
-  }
-  Object.entries(cfg.texts||{}).forEach(([key,html])=>{
-    const el = document.querySelector('[data-edit="'+key+'"]');
-    if(el) el.innerHTML = html;
-  });
-  Object.entries(cfg.images||{}).forEach(([key,dataUrl])=>{ applyImageToTarget(key, dataUrl); });
-}
-function getImgTarget(container){
-  const art = container.querySelector('.art');
-  if(art) return art;
-  const ph = container.querySelector('.art-ph');
-  if(ph) return ph;
-  return container;
-}
-function applyImageToTarget(key, dataUrl){
-  const container = document.querySelector('[data-edit-img="'+key+'"]');
-  if(!container) return;
-  const target = getImgTarget(container);
-  target.style.backgroundImage = "url('"+dataUrl+"')";
-  target.style.backgroundSize = 'cover';
-  target.style.backgroundPosition = 'center';
-  container.classList.add('has-custom-img');
-}
-function removeImageFromTarget(key){
-  const container = document.querySelector('[data-edit-img="'+key+'"]');
-  if(container){
-    const target = getImgTarget(container);
-    target.style.backgroundImage = '';
-    container.classList.remove('has-custom-img');
-  }
-  if(siteConfig.images) delete siteConfig.images[key];
-  saveSiteConfig();
-}
-function initEditableImages(){
-  document.querySelectorAll('[data-edit-img]').forEach(container=>{
-    if(container.querySelector('.img-edit-btn')) return;
-    const key = container.getAttribute('data-edit-img');
-    const btn = document.createElement('button');
-    btn.type='button'; btn.className='img-edit-btn'; btn.textContent='Cambia immagine';
-    const removeBtn = document.createElement('button');
-    removeBtn.type='button'; removeBtn.className='img-edit-remove'; removeBtn.textContent='×';
-    const input = document.createElement('input');
-    input.type='file'; input.accept='image/*'; input.style.display='none';
-    btn.addEventListener('click', (e)=>{ e.stopPropagation(); e.preventDefault(); input.click(); });
-    removeBtn.addEventListener('click', (e)=>{ e.stopPropagation(); e.preventDefault(); removeImageFromTarget(key); });
-    input.addEventListener('change', ()=>{
-      const file = input.files[0];
-      if(!file) return;
-      const reader = new FileReader();
-      reader.onload = ()=>{
-        siteConfig.images = siteConfig.images || {};
-        siteConfig.images[key] = reader.result;
-        applyImageToTarget(key, reader.result);
-        saveSiteConfig();
-      };
-      reader.readAsDataURL(file);
-    });
-    container.appendChild(btn);
-    container.appendChild(removeBtn);
-    container.appendChild(input);
-  });
-}
-function initEditableTexts(){
-  document.querySelectorAll('[data-edit]').forEach(el=>{
-    if(el.dataset.editBound) return;
-    el.dataset.editBound = '1';
-    el.addEventListener('blur', ()=>{
-      if(!editModeOn) return;
-      const key = el.getAttribute('data-edit');
-      siteConfig.texts = siteConfig.texts || {};
-      siteConfig.texts[key] = el.innerHTML;
-      saveSiteConfig();
-    });
-  });
-}
-function toggleEditMode(){
-  editModeOn = !editModeOn;
-  document.body.classList.toggle('site-edit-mode', editModeOn);
-  document.getElementById('editDock').classList.toggle('open', editModeOn);
-  const statusEl = document.getElementById('editModeStatus');
-  const btnEl = document.getElementById('toggleEditBtn');
-  if(statusEl) statusEl.textContent = editModeOn ? 'Attiva' : 'Disattiva';
-  if(btnEl) btnEl.textContent = editModeOn ? 'Disattiva' : 'Attiva';
-  document.querySelectorAll('[data-edit]').forEach(el=>{
-    el.setAttribute('contenteditable', editModeOn ? 'true' : 'false');
-  });
-}
-function openColorPanel(){
-  const getV = (v)=>{ const c = getComputedStyle(document.documentElement).getPropertyValue(v).trim(); return c.startsWith('#') ? c : '#ffffff'; };
-  document.getElementById('pickBg').value = getV('--bg');
-  document.getElementById('pickInk').value = getV('--ink');
-  document.getElementById('pickBlue').value = getV('--accent');
-  document.getElementById('pickBlueDeep').value = getV('--accent-deep');
-  document.getElementById('pickSage').value = getV('--sage');
-  document.getElementById('pickGold').value = getV('--gold');
-  document.getElementById('colorPanelOverlay').classList.add('open');
-}
-function closePanels(){
-  document.getElementById('colorPanelOverlay').classList.remove('open');
-  document.getElementById('fontPanelOverlay').classList.remove('open');
-}
-['pickBg','pickInk','pickBlue','pickBlueDeep','pickSage','pickGold'].forEach(id=>{
-  const el = document.getElementById(id);
-  if(!el) return;
-  el.addEventListener('input', ()=>{
-    const varName = el.getAttribute('data-var');
-    document.documentElement.style.setProperty(varName, el.value);
-    siteConfig.colors = siteConfig.colors || {};
-    siteConfig.colors[varName] = el.value;
-    saveSiteConfig();
-  });
-});
-function openFontPanel(){
-  const wrap = document.getElementById('fontOptions');
-  wrap.innerHTML = '';
-  FONT_PAIRS.forEach(fp=>{
-    const div = document.createElement('div');
-    div.className = 'font-option' + (siteConfig.fonts && siteConfig.fonts.heading===fp.heading ? ' selected' : '');
-    div.innerHTML = '<div class="fo-title" style="font-family:\''+fp.heading+'\',serif;">'+fp.label+'</div><div class="fo-sub">'+fp.sub+'</div>';
-    div.addEventListener('click', ()=>{
-      siteConfig.fonts = {heading:fp.heading, body:fp.body};
-      applySiteConfig(siteConfig);
-      saveSiteConfig();
-      openFontPanel();
-    });
-    wrap.appendChild(div);
-  });
-  document.getElementById('fontPanelOverlay').classList.add('open');
-}
-async function resetSiteConfig(){
-  if(!confirm('Vuoi davvero ripristinare il design originale? Tutte le personalizzazioni salvate andranno perse.')) return;
-  siteConfig = {colors:{}, fonts:{}, texts:{}, images:{}};
-  await saveSiteConfig();
-  location.reload();
-}
-(async function initEditor(){
-  const cfg = await getSiteConfig();
-  applySiteConfig(cfg);
-  initEditableImages();
-  initEditableTexts();
-})();
 
 /* ============ MODAL ============ */
 function openModal(title, text){

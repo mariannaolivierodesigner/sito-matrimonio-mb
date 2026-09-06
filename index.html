@@ -391,11 +391,12 @@
       <button class="btn primary" onclick="checkAdmin()">Entra</button>
     </div>
     <div class="admin-panel" id="adminPanel" style="display:none;">
-      <div class="section-head"><span class="eyebrow">Area riservata</span><h2 style="font-size:30px;">Esporta i dati raccolti</h2></div>
-      <div class="admin-row"><div><div>Conferme partecipazione (RSVP)</div><div class="n" id="rsvpCount">–</div></div><button class="btn" onclick="exportData('rsvp')">Esporta Excel</button></div>
-      <div class="admin-row"><div><div>Richieste alloggio</div><div class="n" id="stayCount">–</div></div><button class="btn" onclick="exportData('stay')">Esporta Excel</button></div>
-      <div class="admin-row"><div><div>Canzoni proposte</div><div class="n" id="songCount">–</div></div><button class="btn" onclick="exportData('song')">Esporta Excel</button></div>
-      <div class="status-msg" id="adminStatus"></div>
+      <div class="section-head"><span class="eyebrow">Area riservata</span><h2 style="font-size:30px;">Dati raccolti</h2></div>
+      <p style="max-width:520px;">I dati veri sono tutti nel Google Sheet condiviso, aggiornato in tempo reale da qualsiasi dispositivo compilino il form gli invitati. I pulsanti sotto aprono direttamente il foglio: una volta dentro, seleziona la scheda giusta in basso (RSVP, Alloggio o Canzoni).</p>
+      <div class="admin-row"><div><div>Conferme partecipazione (RSVP)</div></div><a class="btn" target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/1YQY0rYAL9J-CS8NgN-owD5-QWXhxSBp8z-e16K-9tDw/edit#gid=0">Apri Google Sheet</a></div>
+      <div class="admin-row"><div><div>Richieste alloggio</div></div><a class="btn" target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/1YQY0rYAL9J-CS8NgN-owD5-QWXhxSBp8z-e16K-9tDw/edit#gid=69812800">Apri Google Sheet</a></div>
+      <div class="admin-row"><div><div>Canzoni proposte</div></div><a class="btn" target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/1YQY0rYAL9J-CS8NgN-owD5-QWXhxSBp8z-e16K-9tDw/edit#gid=363448543">Apri Google Sheet</a></div>
+      <div class="status-msg" id="adminStatus" style="margin-top:30px;">Vuoi comunque un'esportazione di prova dal browser che stai usando ora? <a href="#" onclick="exportData('rsvp');return false;" style="text-decoration:underline;">RSVP</a> · <a href="#" onclick="exportData('stay');return false;" style="text-decoration:underline;">Alloggio</a> · <a href="#" onclick="exportData('song');return false;" style="text-decoration:underline;">Canzoni</a></div>
     </div>
   </div>
 </section>

@@ -60,17 +60,22 @@ const WEDDING_DATE = new Date('2027-08-28T16:30:00');
    nel database di Claude / locale). */
 const SHEET_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwbMAEbk4TWpf-aImZXrLmRrEXTXZCRNAiMrAt7f_SH1fLh90Nre4I4XYQknQjcVkGJ/exec';
 const SHEET_TAB_NAMES = { rsvp: 'RSVP', stay: 'Alloggio', song: 'Canzoni' };
-function sendToSheet(type, rows){
-  if(!SHEET_WEBHOOK_URL) return; // non ancora collegato: nessuna azione
+async function sendToSheet(type, rows){
+  if(!SHEET_WEBHOOK_URL) return {ok:false, reason:'Nessun link Google Sheet configurato.'};
   try{
-    fetch(SHEET_WEBHOOK_URL, {
+    const res = await fetch(SHEET_WEBHOOK_URL, {
       method: 'POST',
-      mode: 'no-cors',
-      headers: {'Content-Type': 'text/plain'},
+      headers: {'Content-Type': 'text/plain;charset=utf-8'},
       body: JSON.stringify({ sheet: SHEET_TAB_NAMES[type], rows: rows })
     });
+    let data = null;
+    try{ data = await res.json(); }catch(e){}
+    if(res.ok && data && data.status === 'ok'){
+      return {ok:true};
+    }
+    return {ok:false, reason:'Risposta inattesa da Google (status '+res.status+').', data};
   }catch(e){
-    console.log('Invio al Google Sheet non riuscito (il sito continua a funzionare normalmente):', e);
+    return {ok:false, reason:'Richiesta non riuscita: '+e.message};
   }
 }
 function buildRsvpRows(record){
@@ -232,12 +237,12 @@ document.getElementById('rsvpForm').addEventListener('submit', async (e)=>{
     const ages = [...document.querySelectorAll('.child-age')].map(i=>i.value||'n.d.');
     const record = {inviati_il: new Date().toLocaleString('it-IT'), ospiti:guests, numero_bambini:childCount, eta_bambini:ages};
     await saveRecord('rsvp', record);
-    sendToSheet('rsvp', buildRsvpRows(record));
+    const sheetResult = await sendToSheet('rsvp', buildRsvpRows(record));
     document.getElementById('rsvpForm').reset();
     document.getElementById('extraGuests').innerHTML='';
     document.getElementById('childAgesField').style.display='none';
     openModal("Grazie", "Abbiamo ricevuto la tua conferma.");
-    statusEl.textContent='';
+    statusEl.textContent = sheetResult.ok ? '' : ('Salvato, ma non inviato al Google Sheet: '+sheetResult.reason);
   }catch(err){
     statusEl.textContent = 'Non è stato possibile salvare la risposta. Riprova tra poco.';
   }
@@ -268,10 +273,10 @@ document.getElementById('stayForm').addEventListener('submit', async (e)=>{
       note: document.getElementById('st-notes').value
     };
     await saveRecord('stay', record);
-    sendToSheet('stay', buildStayRows(record));
+    const sheetResult = await sendToSheet('stay', buildStayRows(record));
     document.getElementById('stayForm').reset();
     openModal('Richiesta ricevuta!', 'Grazie per averci comunicato le tue esigenze: ti aggiorneremo appena avremo le soluzioni migliori per il tuo soggiorno.');
-    statusEl.textContent='';
+    statusEl.textContent = sheetResult.ok ? '' : ('Salvato, ma non inviato al Google Sheet: '+sheetResult.reason);
   }catch(err){
     statusEl.textContent = 'Non è stato possibile inviare la richiesta. Riprova tra poco.';
   }
@@ -301,10 +306,10 @@ document.getElementById('songForm').addEventListener('submit', async (e)=>{
       messaggio: document.getElementById('s-message').value
     };
     await saveRecord('song', record);
-    sendToSheet('song', buildSongRows(record));
+    const sheetResult = await sendToSheet('song', buildSongRows(record));
     document.getElementById('songForm').reset();
     openModal('Grazie', 'La tua canzone è arrivata: la terremo in considerazione per la festa.');
-    statusEl.textContent='';
+    statusEl.textContent = sheetResult.ok ? '' : ('Salvato, ma non inviato al Google Sheet: '+sheetResult.reason);
     updateSongCounter();
   }catch(err){
     statusEl.textContent = 'Non è stato possibile salvare la canzone. Riprova tra poco.';

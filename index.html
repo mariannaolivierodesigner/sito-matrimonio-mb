@@ -48,7 +48,6 @@
 <section class="page active" id="page-home">
   <div class="hero">
     <div class="hero-bg"></div>
-    <div class="hero-tint"></div>
     <div class="hero-content">
       <span class="hero-date">28.08.2027</span>
       <h1 class="hero-names">Marco &amp; Benedetta</h1>
@@ -77,7 +76,7 @@
       <a href="#" class="btn-oval" onclick="go('info');return false;">Info utili</a>
     </div>
     <div class="location-media">
-      <div class="location-photo"><div class="art-ph"></div></div>
+      <div class="location-photo reveal-img"><div class="art-ph"></div></div>
     </div>
   </div>
 
@@ -133,11 +132,8 @@
       <h2>Ok, lo facciamo davvero.</h2>
     </div>
 
-    <div class="reveal photo-placeholder" data-edit-img="celebration-photo" style="margin:10px 0 60px; border:1px dashed var(--line); aspect-ratio:4/3; max-width:520px; display:flex; align-items:center; justify-content:center; text-align:center; padding:30px;">
-      <div class="ph-inner">
-        <span class="eyebrow" style="margin-bottom:8px;">Foto</span>
-        <p style="margin:0;">Foto degli sposi — spontanea e simpatica, non troppo impostata<br>(da inserire)</p>
-      </div>
+    <div class="reveal-img celebration-photo" style="margin:10px 0 60px; max-width:520px; aspect-ratio:4/5; overflow:hidden;">
+      <img src="couple-celebration.jpg" alt="Marco e Benedetta" style="width:100%; height:100%; object-fit:cover; display:block;">
     </div>
 
     <div class="reveal" data-edit="celebration-story" style="max-width:620px;">
@@ -162,25 +158,18 @@
       <h2>Informazioni utili</h2>
     </div>
 
-    <!-- LA GIORNATA -->
-    <div class="reveal" style="margin-bottom:100px;">
-      <div class="section-head" style="margin-bottom:30px;"><span class="eyebrow">La giornata</span></div>
-      <div class="day-list">
-        <div class="day-item reveal" data-edit="info-day-1"><span class="day-time">16:30</span><span class="day-what">Cerimonia<small>Chiesa di Sant'Antonio a Posillipo</small></span></div>
-        <div class="day-item reveal" data-edit="info-day-2"><span class="day-time">18:00</span><span class="day-what">Villa Vittoria<small>Inizia la festa</small></span></div>
-        <div class="day-item reveal" data-edit="info-day-3"><span class="day-time">A seguire</span><span class="day-what">Cena</span></div>
-        <div class="day-item reveal" data-edit="info-day-4"><span class="day-time">E poi...</span><span class="day-what">Si continua a festeggiare</span></div>
+    <!-- DRESS CODE + FOTO -->
+    <div class="wrap info-split reveal" style="margin-bottom:100px;">
+      <div class="info-split-photo reveal-img">
+        <img src="couple-info.jpg" alt="Marco e Benedetta" style="width:100%; height:100%; object-fit:cover; display:block;">
       </div>
-      <p data-edit="info-day-note" style="margin-top:26px;">Non vogliamo raccontarvi proprio tutto. Qualcosa è meglio viverla direttamente.</p>
-    </div>
-
-    <!-- DRESS CODE -->
-    <div class="reveal" data-edit="info-dresscode" style="margin-bottom:110px; max-width:640px;">
-      <div class="section-head" style="margin-bottom:20px;"><span class="eyebrow">Dress code</span><h2 style="font-size:26px;">Eleganti, ma a modo vostro.</h2></div>
-      <p>Non abbiamo scelto colori obbligatori e non ci interessa creare una palette da rispettare.</p>
-      <p>È pur sempre una <em>serata di festa</em>, quindi ci farà piacere vedervi eleganti e con il vostro stile. Ma soprattutto vogliamo che vi sentiate bene.</p>
-      <p>Se pensate che durante la serata avrete voglia di ballare, scatenarvi o semplicemente stare più comodi, <em>portate tranquillamente un ricambio</em>. Una seconda scarpa, una camicia più easy, una T-shirt: quello che vi fa stare meglio.</p>
-      <p>L'obiettivo è arrivare eleganti e finire la serata comodi e felici.</p>
+      <div class="info-split-text" data-edit="info-dresscode">
+        <div class="section-head" style="margin-bottom:20px;"><span class="eyebrow">Dress code</span><h2 style="font-size:26px;">Eleganti, ma a modo vostro.</h2></div>
+        <p>Non abbiamo scelto colori obbligatori e non ci interessa creare una palette da rispettare.</p>
+        <p>È pur sempre una <em>serata di festa</em>, quindi ci farà piacere vedervi eleganti e con il vostro stile. Ma soprattutto vogliamo che vi sentiate bene.</p>
+        <p>Se pensate che durante la serata avrete voglia di ballare, scatenarvi o semplicemente stare più comodi, <em>portate tranquillamente un ricambio</em>. Una seconda scarpa, una camicia più easy, una T-shirt: quello che vi fa stare meglio.</p>
+        <p>L'obiettivo è arrivare eleganti e finire la serata comodi e felici.</p>
+      </div>
     </div>
 
     <!-- COME ARRIVARE ALLA CERIMONIA -->
@@ -194,7 +183,7 @@
         <p data-edit="info-church-address" style="margin-top:8px;">Via Minucio Felice, 13 — Napoli</p>
         <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Via+Minucio+Felice,+13,+Napoli" target="_blank" rel="noopener">Apri su Google Maps</a>
       </div>
-      <div class="map-box">
+      <div class="map-box reveal-img">
         <iframe class="map-frame" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
           src="https://www.google.com/maps?q=Via+Minucio+Felice,13,Napoli&output=embed"></iframe>
       </div>
@@ -224,7 +213,7 @@
         <p data-edit="info-villa-address" style="margin-top:8px;">Posillipo — Napoli</p>
         <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Villa+Vittoria,+Posillipo,+Napoli" target="_blank" rel="noopener">Apri su Google Maps</a>
       </div>
-      <div class="map-box">
+      <div class="map-box reveal-img">
         <iframe class="map-frame" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
           src="https://www.google.com/maps?q=Villa+Vittoria,Posillipo,Napoli&output=embed"></iframe>
       </div>

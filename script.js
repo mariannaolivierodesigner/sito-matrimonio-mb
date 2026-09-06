@@ -45,7 +45,10 @@ let revealObserver = new IntersectionObserver((entries)=>{
   entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); revealObserver.unobserve(e.target); } });
 },{threshold:.15});
 function observeReveals(){
-  document.querySelectorAll('.page.active .reveal:not(.in)').forEach(el=>revealObserver.observe(el));
+  document.querySelectorAll('.page.active .reveal:not(.in), .page.active .reveal-img:not(.in)').forEach(el=>{
+    revealObserver.observe(el);
+    setTimeout(()=>{ el.classList.add('in'); }, 2500);
+  });
 }
 observeReveals();
 

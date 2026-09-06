@@ -17,6 +17,9 @@ window.addEventListener('popstate', (e)=>{
   const id = (e.state && e.state.page) || 'home';
   go(id, true);
 });
+if(location.hash === '#area-riservata-mb'){
+  go('admin', true);
+}
 function openMobileMenu(){
   document.getElementById('mobileMenu').classList.add('open');
   document.getElementById('menuBackdrop').classList.add('open');
@@ -322,9 +325,15 @@ document.getElementById('songForm').addEventListener('submit', async (e)=>{
 updateSongCounter();
 
 /* ============ ADMIN ============ */
-function checkAdmin(){
+const ADMIN_CODE_HASH = '2b45742045267f2b33a36cda1052dc01cad50fa1f9f1d5a4bde63487adf38058';
+async function sha256Hex(text){
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+async function checkAdmin(){
   const code = document.getElementById('adminCode').value;
-  if(code === 'sposi2027'){
+  const hash = await sha256Hex(code);
+  if(hash === ADMIN_CODE_HASH){
     document.getElementById('adminGate').style.display='none';
     document.getElementById('adminPanel').style.display='block';
     refreshCounts();

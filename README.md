@@ -17,14 +17,23 @@ npx serve .
 
 e aprire l'indirizzo che compare nel terminale.
 
-## Area riservata (editor visivo + export)
+## Area riservata (export dati)
 
-In fondo al menu laterale (hamburger) → "Area riservata" → codice: `sposi2027`
+Non è più raggiungibile dal menu (rimosso di proposito, per non renderla visibile agli invitati).
+Si apre solo con l'indirizzo diretto:
 
-Da lì si può:
-- esportare in Excel le risposte raccolte (RSVP, alloggio, canzoni)
-- attivare la "Modalità modifica" per cambiare testi, foto, colori e font
-  direttamente sul sito, senza toccare il codice
+`https://[tuo-dominio]/#area-riservata-mb`
+
+Codice di accesso: `sposi2027`
+
+Da lì si possono esportare in Excel le risposte raccolte (RSVP, alloggio, canzoni).
+
+**Nota sulla sicurezza**: questo è un sito statico, senza un vero server — qualsiasi controllo fatto
+in JavaScript (compreso questo codice) può in teoria essere aggirato da qualcuno che sa dove guardare
+nel codice sorgente. Il codice è "nascosto" tramite hash (non compare in chiaro), e l'indirizzo non è
+linkato da nessuna parte del sito, il che rende la pagina praticamente introvabile per un invitato
+normale — ma non è una protezione di livello bancario. Per dati davvero sensibili in futuro servirebbe
+un vero backend con autenticazione.
 
 ## Collegare Google Sheets (raccolta dati condivisa)
 

@@ -100,7 +100,7 @@ function buildRsvpRows(record){
 }
 function buildStayRows(r){
   return [{
-    'Inviato il': r.inviato_il, 'Nome e cognome': r.nome_cognome, 'Città di provenienza': r.citta,
+    'Inviato il': r.inviato_il, 'Nome e cognome': r.nome_cognome, 'Email': r.email, 'Città di provenienza': r.citta,
     'Sistemazione organizzata': r.sistemazione_organizzata, 'Numero persone': r.numero_persone,
     'Notti': r.notti, 'Arrivo': r.arrivo, 'Partenza': r.partenza, 'Spostamenti': r.spostamenti, 'Note': r.note
   }];
@@ -269,6 +269,7 @@ document.getElementById('stayForm').addEventListener('submit', async (e)=>{
     const record = {
       inviato_il: new Date().toLocaleString('it-IT'),
       nome_cognome: document.getElementById('st-name').value,
+      email: document.getElementById('st-email').value,
       citta: document.getElementById('st-city').value,
       sistemazione_organizzata: org ? org.value : '',
       numero_persone: people ? people.value : '',
@@ -342,9 +343,7 @@ async function checkAdmin(){
   }
 }
 async function refreshCounts(){
-  document.getElementById('rsvpCount').textContent = (await listRecords('rsvp')).length + ' risposte';
-  document.getElementById('stayCount').textContent = (await listRecords('stay')).length + ' richieste';
-  document.getElementById('songCount').textContent = (await listRecords('song')).length + ' canzoni';
+  /* i contatori locali non sono più mostrati: i dati veri sono nel Google Sheet */
 }
 async function exportData(type){
   const statusEl = document.getElementById('adminStatus');

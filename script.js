@@ -231,7 +231,7 @@ document.getElementById('rsvpForm').addEventListener('submit', async (e)=>{
     const blocks = [document.querySelector('#rsvpForm')].concat([...document.querySelectorAll('#extraGuests .guest-block')]);
     const guests = [];
     document.querySelectorAll('.g-nome').forEach((el,i)=>{
-      const scope = el.closest('form') || el.closest('.guest-block');
+      const scope = el.closest('#extraGuests .guest-block') || el.closest('form');
       const nome = el.value;
       const cognome = scope.querySelector('.g-cognome').value;
       const confInput = scope.querySelector('input[type=radio]:checked');

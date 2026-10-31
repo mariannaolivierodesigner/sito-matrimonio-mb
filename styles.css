@@ -616,3 +616,14 @@ body.lock{overflow:hidden;}
 /* footer olive con testo avorio */
 footer{background:var(--band) !important; color:var(--alabaster) !important; border-top:0 !important; backdrop-filter:none !important;}
 footer *{color:inherit;}
+
+/* ===== Fiori stilizzati che si disegnano ===== */
+.mag-w{display:block;line-height:0;margin:0 0 20px;text-align:inherit}
+.mag{display:inline-block;height:calc(var(--mh,1) * 112px);width:auto;max-width:100%;color:var(--accent);overflow:visible;vertical-align:top}
+.schedule-band .mag-w{margin-bottom:26px}
+.schedule-band .mag{color:var(--bg)}
+.mag.dr path{stroke-dasharray:1;stroke-dashoffset:1}
+.mag .mf{opacity:0}
+.location-text .mag-w,.menu-guide .mag-w{margin-bottom:22px}
+@media(max-width:640px){.mag{--mh:.84}}
+@media(prefers-reduced-motion:reduce){.mag.dr path{stroke-dashoffset:0}.mag .mf{opacity:1}}

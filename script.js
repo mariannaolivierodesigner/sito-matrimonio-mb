@@ -366,7 +366,7 @@ async function exportData(type){
 }
 
 /* ============ MUSICA ============ */
-const audio=new Audio();audio.loop=true;audio.volume=.3;audio.preload="none";
+const audio=new Audio();audio.loop=true;audio.volume=.55;audio.preload="none";
 let fadeT=null;
 function fadeMusic(){
   clearInterval(fadeT);
@@ -375,7 +375,7 @@ function fadeMusic(){
 async function playMusic(){
   clearInterval(fadeT);
   if(!audio.src||audio.src===location.href){audio.src="assets/colonna-sonora.mp3"}
-  audio.currentTime=0;audio.volume=.3;
+  audio.currentTime=0;audio.volume=.55;
   try{await audio.play()}catch(e){return}
 }
 

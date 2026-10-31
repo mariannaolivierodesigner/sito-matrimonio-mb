@@ -542,3 +542,9 @@ body.lock{overflow:hidden;}
 .info-teaser{padding-top:0;}
 .info-teaser .art-ph{background-image:url('location-table.jpg') !important; background-size:cover; background-position:center;}
 @media(max-width:840px){.info-teaser .location-photo{order:-1;}}
+
+/* fiori laterali pagina Info utili (solo desktop) */
+.page-flowers{display:none;}
+@media(min-width:1040px){
+  #page-info .page-flowers{display:block; position:fixed; right:0; top:0; height:100vh; width:calc(100vh*.415); max-width:34vw; background:url('info-flowers.png') right center/contain no-repeat; pointer-events:none; z-index:1; opacity:.95;}
+}

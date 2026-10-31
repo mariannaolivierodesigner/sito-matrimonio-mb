@@ -55,6 +55,21 @@ function observeReveals(){
 }
 observeReveals();
 
+/* ============ PROGRAMMA: ogni tappa compare mentre si scorre ============ */
+(function(){
+  const items=[...document.querySelectorAll('#program .day-item')];
+  if(!items.length) return;
+  if(!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion:reduce)').matches){
+    items.forEach(i=>i.classList.add('in')); return;
+  }
+  const io=new IntersectionObserver((entries)=>{
+    entries.filter(e=>e.isIntersecting)
+      .sort((a,b)=>a.boundingClientRect.top-b.boundingClientRect.top)
+      .forEach((e,k)=>{ e.target.style.setProperty('--d',(k*0.5)+'s'); e.target.classList.add('in'); io.unobserve(e.target); });
+  },{threshold:.35, rootMargin:'0px 0px -6% 0px'});
+  items.forEach(i=>io.observe(i));
+})();
+
 /* ============ COUNTDOWN ============ */
 const WEDDING_DATE = new Date('2027-08-28T16:30:00');
 

@@ -628,3 +628,4 @@ footer *{color:inherit;}
 @media(max-width:640px){.mag{--mh:.84}}
 @media(prefers-reduced-motion:reduce){.mag.dr path{stroke-dashoffset:0}.mag .mf{opacity:1}}
 .modal .modal-mono{display:block;height:58px;width:auto;margin:0 auto 18px;color:var(--accent-deep)}
+#modalText{white-space:pre-line}

@@ -497,3 +497,9 @@ h1,h2,h3,.mobile-menu a,.church-card h3,.info-cell h3,.modal h3,.hero-names{font
 /* respiro sotto l'ultima sezione di ogni pagina interna (non attaccata al footer) */
 .page:not(#page-home) > .wrap{padding-bottom:110px;}
 @media(max-width:640px){.page:not(#page-home) > .wrap{padding-bottom:90px;}}
+
+/* Etichette identiche al titolo "Orazio Service"; testo corrente senza corsivo */
+.label-italic,.church-card .k,.info-cell .k{display:block; font-family:'Cormorant SC','Cormorant Garamond',Georgia,serif !important; font-style:normal !important; font-weight:400 !important; font-size:22px !important; letter-spacing:.07em !important; line-height:1.5; color:var(--ink) !important; margin-bottom:4px;}
+.page p em,.page small em{font-style:normal !important;}
+.cel-outro .cel-end{font-family:var(--font-body),'Work Sans',sans-serif !important; font-style:normal !important; font-size:inherit; line-height:inherit; margin:26px 0 34px;}
+.cel-outro .cel-end{color:var(--ink) !important;}

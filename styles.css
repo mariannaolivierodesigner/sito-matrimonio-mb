@@ -537,3 +537,5 @@ body.lock{overflow:hidden;}
 .replay-pill{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:calc(58px + env(safe-area-inset-bottom,0px));z-index:400;padding:9px 16px;border-radius:100px;border:1px solid var(--accent-deep);background:var(--bg);color:var(--accent-deep);font-size:12px;letter-spacing:.06em;cursor:pointer;font-family:inherit}
 .replay-pill:hover{background:var(--accent-deep);color:var(--bg)}
 .replay-pill[hidden]{display:none}
+.info-split{display:block;}
+.info-split-text{max-width:620px;}

@@ -548,3 +548,4 @@ body.lock{overflow:hidden;}
 @media(min-width:1040px){
   #page-info .page-flowers{display:block; position:fixed; right:0; top:0; height:100vh; width:calc(100vh*.415); max-width:34vw; background:url('info-flowers.png') right center/contain no-repeat; pointer-events:none; z-index:1; opacity:.95;}
 }
+@media(max-width:840px){.info-teaser .location-text{order:1;} .info-teaser .location-media{order:2;}}

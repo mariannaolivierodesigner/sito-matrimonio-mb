@@ -549,3 +549,10 @@ body.lock{overflow:hidden;}
   #page-info .page-flowers{display:block; position:fixed; right:0; top:0; height:100vh; width:calc(100vh*.415); max-width:34vw; background:url('info-flowers.png') right center/contain no-repeat; pointer-events:none; z-index:1; opacity:.38; filter:saturate(.75) brightness(1.04);}
 }
 @media(max-width:840px){.info-teaser .location-text{order:1;} .info-teaser .location-media{order:2;}}
+
+/* fiori di campo agli angoli dei moduli */
+.form-card{position:relative; overflow:visible;}
+.form-card::before{content:""; position:absolute; inset:-54px; pointer-events:none; z-index:2; --cs:150px;
+  background-image:url('ang-form-tl.png'),url('ang-form-tr.png'),url('ang-form-bl.png'),url('ang-form-br.png');
+  background-repeat:no-repeat; background-size:var(--cs) var(--cs); background-position:left top,right top,left bottom,right bottom;}
+@media(max-width:640px){.form-card::before{inset:-30px -10px; --cs:80px;}}

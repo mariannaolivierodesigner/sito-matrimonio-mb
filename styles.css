@@ -540,5 +540,5 @@ body.lock{overflow:hidden;}
 .info-split{display:block;}
 .info-split-text{max-width:620px;}
 .info-teaser{padding-top:0;}
-.info-teaser .art-ph{background-image:none !important; background:var(--bg-soft);}
+.info-teaser .art-ph{background-image:url('location-table.jpg') !important; background-size:cover; background-position:center;}
 @media(max-width:840px){.info-teaser .location-photo{order:-1;}}

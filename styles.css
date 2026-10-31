@@ -552,7 +552,20 @@ body.lock{overflow:hidden;}
 
 /* fiori di campo agli angoli dei moduli */
 .form-card{position:relative; overflow:visible;}
-.form-card::before{content:""; position:absolute; inset:-54px; pointer-events:none; z-index:2; --cs:150px;
+.form-card::before{content:""; position:absolute; inset:-44px; pointer-events:none; z-index:2; --cs:160px;
   background-image:url('ang-form-tl.png'),url('ang-form-tr.png'),url('ang-form-bl.png'),url('ang-form-br.png');
   background-repeat:no-repeat; background-size:var(--cs) var(--cs); background-position:left top,right top,left bottom,right bottom;}
 @media(max-width:640px){.form-card::before{inset:-30px -10px; --cs:80px;}}
+/* programma: solo icone, senza cerchi */
+#program .tl-dot svg{border:0 !important; background:none !important; padding:6px;}
+@media(max-width:640px){#program .tl-dot svg{padding:4px;}}
+/* cornici fiori: non coprono testi e pulsanti */
+.form-card{padding:76px 50px 88px;}
+.form-card::before{inset:-58px; --cs:136px;}
+@media(max-width:640px){.form-card{padding:56px 24px 68px;} .form-card::before{inset:-38px -12px; --cs:84px;}}
+/* programma: icone piu presenti e vicine al testo */
+#program .tl-dot svg{padding:3px;}
+#program .day-item{grid-template-columns:110px 52px 1fr;}
+@media(max-width:560px){#program .day-item{grid-template-columns:74px 40px 1fr;} #program .tl-dot svg{padding:3px;}}
+#program .day-time{padding-bottom:44px;} #program .day-what{padding-bottom:44px;}
+@media(max-width:560px){#program .day-time{padding-bottom:34px;} #program .day-what{padding-bottom:34px;}}

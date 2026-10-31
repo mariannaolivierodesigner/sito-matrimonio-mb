@@ -14,9 +14,9 @@
   --white:#FFFFFF;
   --shadow: 0 18px 40px -20px rgba(43,42,40,.25);
   --ease: cubic-bezier(.22,.61,.36,1);
-  --font-heading:'Fraunces';
+  --font-heading:'Cormorant Garamond';
   --font-body:'Work Sans';
-  --font-script:'Beau Rivage';
+  --font-script:'Pinyon Script';
 }
 *{box-sizing:border-box;}
 html{scroll-behavior:smooth;}
@@ -449,3 +449,14 @@ body:has(#page-home.active){padding-bottom:0;}
   opacity:0; animation:fadeUpMeta 1.3s var(--ease) forwards; animation-delay:.4s;}
 @media (max-width:820px){.hero-inv{width:min(62vw, calc((100dvh - 200px) * 1.4)); margin-top:150px;}}
 @media (max-width:560px){.hero-inv{width:76vw; margin-top:150px;}}
+
+/* ============ FONT: stessi del sito di Antonio e Francesco ============ */
+h1,h2,h3,.display,.eyebrow,.sch-time,.day-item .day-time,.invite-eyebrow,.invite-after,.subhead-row h4,.label-italic,.iban-row .v,.church-card .k,.info-cell .k,.song-row .t,.empty-note,.modal .mk,.mobile-menu a,.loc-eyebrow{font-weight:600; font-size-adjust:.46;}
+h1,h2,h3,.mobile-menu a,.church-card h3,.info-cell h3,.modal h3,.hero-names{font-family:'Cormorant SC','Cormorant Garamond',Georgia,serif; font-weight:500; letter-spacing:.07em;}
+.mobile-menu a{font-weight:500;}
+h1 .script-accent,h2 .script-accent,h3 .script-accent{font-family:var(--font-script),cursive; font-weight:400; letter-spacing:0;}
+.loc-eyebrow{font-family:'Cormorant SC','Cormorant Garamond',Georgia,serif; font-weight:500; font-variant-caps:normal; text-transform:none; letter-spacing:.07em;}
+.btn,.btn-oval,a.btn,button.btn{font-family:'Cormorant Garamond',Georgia,serif; text-transform:uppercase; font-weight:700; letter-spacing:.14em; font-size:14px;}
+form .btn,form button,.add-guest-btn,.copy-btn{font-family:var(--font-body),sans-serif; text-transform:none; font-weight:400; font-size:13px; letter-spacing:.06em;}
+.rsvp-pill{font-family:var(--font-body),sans-serif; font-weight:400; font-size:12px; letter-spacing:.08em; text-transform:uppercase;}
+.eyebrow,.label-italic,.church-card .k,.info-cell .k,.subhead-row h4,.sch-time,.day-item .day-time,#program .day-time,.song-row .t,.empty-note,.modal .mk,.invite-after{font-family:var(--font-heading),serif; font-style:italic;}

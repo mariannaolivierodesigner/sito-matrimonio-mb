@@ -504,3 +504,36 @@ h1,h2,h3,.mobile-menu a,.church-card h3,.info-cell h3,.modal h3,.hero-names{font
 .cel-outro .cel-end{font-family:var(--font-body),'Work Sans',sans-serif !important; font-style:normal !important; font-size:inherit; line-height:inherit; margin:26px 0 34px;}
 .cel-outro .cel-end{color:var(--ink) !important;}
 .church-card .k,.info-cell .k{font-family:var(--font-heading),'Cormorant Garamond',serif !important; font-variant:normal !important; text-transform:none !important; font-weight:500 !important; font-size:22px !important; letter-spacing:.04em !important;}
+
+/* ============ BUSTA D'INTRO (stessa struttura di Antonio & Francesco) ============ */
+body.lock{overflow:hidden;}
+.hero-inv{animation:none !important; opacity:1 !important;}
+.intro{position:fixed;inset:0;z-index:1000;overflow:hidden;background:#B9BCA4 url("hero-poster.jpg") center/cover no-repeat;transition:opacity 1.5s ease}
+.intro::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(250,247,242,.14),rgba(69,73,49,.34));pointer-events:none}
+.intro.leaving{opacity:0;pointer-events:none}
+.intro:not(.laid)>*{visibility:hidden !important}
+#evIdle{position:absolute;display:block;max-width:none;pointer-events:none;transition:opacity .3s ease;filter:drop-shadow(0 14px 22px rgba(35,37,27,.30)) drop-shadow(0 2px 4px rgba(35,37,27,.22))}
+#evStage{position:absolute;inset:0;pointer-events:none;transition:transform 1.9s cubic-bezier(.45,0,.25,1);will-change:transform}
+#evStage.zoom{transform:scale(var(--evz,1))}
+#evCv{position:absolute;display:block;opacity:0;pointer-events:none;filter:drop-shadow(0 14px 22px rgba(35,37,27,.30)) drop-shadow(0 2px 4px rgba(35,37,27,.22))}
+#evCard2{position:absolute;display:block;opacity:0;object-fit:cover;pointer-events:none;transform-origin:50% 50%;box-shadow:0 10px 26px rgba(35,37,27,.22)}
+#evVid{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.intro.vready #evIdle,.intro.vfall #evIdle{opacity:0}
+.intro.vready #evCv{opacity:1}
+.seal{position:absolute;z-index:6;transform:translate(-50%,-50%);background:none;border:0;border-radius:50%;cursor:pointer;padding:0;-webkit-tap-highlight-color:transparent}
+.intro.vready .seal{transition:opacity .3s ease}
+.seal.pressed{pointer-events:none}
+.intro.vready .seal.pressed{opacity:0}
+.env-text{position:absolute;inset:0;z-index:5;pointer-events:none;color:#454931;transition:opacity .5s ease}
+.env-text span{position:absolute;left:50%;transform:translate(-50%,-50%);white-space:nowrap;text-align:center;mix-blend-mode:multiply;text-shadow:0 0 .4px rgba(40,44,28,.35)}
+.et-top,.et-open{font-family:'Cormorant Garamond',Georgia,serif;font-variant:small-caps;font-weight:600;letter-spacing:.07em;color:#454931;opacity:0}
+.et-names{font-family:'Pinyon Script',cursive;color:#454931;line-height:1;clip-path:inset(-20% 100% -20% 0)}
+.intro:not(.opening) .et-top{animation:etFade 1s ease .5s forwards}
+.intro:not(.opening) .et-names{animation:etWipe 2s ease 1.3s forwards}
+.intro:not(.opening) .et-open{animation:etFade 1.2s ease 3.4s forwards}
+.intro.opening .env-text{opacity:0}
+@keyframes etFade{to{opacity:1}}
+@keyframes etWipe{to{clip-path:inset(-20% 0 -20% 0)}}
+.replay-pill{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:calc(58px + env(safe-area-inset-bottom,0px));z-index:400;padding:9px 16px;border-radius:100px;border:1px solid var(--accent-deep);background:var(--bg);color:var(--accent-deep);font-size:12px;letter-spacing:.06em;cursor:pointer;font-family:inherit}
+.replay-pill:hover{background:var(--accent-deep);color:var(--bg)}
+.replay-pill[hidden]{display:none}

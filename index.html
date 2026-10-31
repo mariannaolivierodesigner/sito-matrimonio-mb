@@ -10,10 +10,20 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Cormorant+SC:wght@400;500;600;700&family=Pinyon+Script&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<link rel="preload" as="image" href="env_closed.jpg" fetchpriority="high">
+<link rel="preload" as="fetch" href="env_open.mp4" crossorigin>
 <link rel="stylesheet" href="styles.css">
 
 </head>
-<body>
+<body class="lock">
+
+<!-- ============ BUSTA ============ -->
+<div class="intro" id="intro" role="dialog" aria-label="Partecipazione">
+  <img id="evIdle" fetchpriority="high" src="env_closed.jpg" alt="" aria-hidden="true"><div id="evStage"><canvas id="evCv" aria-hidden="true"></canvas><img id="evCard2" src="hero-invito.jpg" alt="" aria-hidden="true"></div><video id="evVid" muted playsinline preload="auto" aria-hidden="true"></video>
+  <div class="env-text" id="envText" aria-hidden="true"><span class="et-top">Con Immenso Amore</span><span class="et-names">Marco &amp; Benedetta</span><span class="et-open">Apri la Partecipazione</span></div>
+  <button class="seal" id="seal" type="button" aria-label="Apri la partecipazione"></button>
+</div>
+<button type="button" id="replay" class="replay-pill" hidden>&#8634; Rivedi apertura</button>
 
 <!-- ============ NAV ============ -->
 <header class="site-nav" id="siteNav">

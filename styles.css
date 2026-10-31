@@ -613,3 +613,6 @@ body.lock{overflow:hidden;}
 .cd-band .cd-wrap{padding-top:90px; padding-bottom:140px;}
 .cd-band .countdown .lab{color:var(--ink); opacity:.78;}
 @media(max-width:560px){.cd-band .cd-wrap{padding-top:64px; padding-bottom:120px;}}
+/* footer olive con testo avorio */
+footer{background:var(--band) !important; color:var(--alabaster) !important; border-top:0 !important; backdrop-filter:none !important;}
+footer *{color:inherit;}

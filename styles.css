@@ -503,3 +503,4 @@ h1,h2,h3,.mobile-menu a,.church-card h3,.info-cell h3,.modal h3,.hero-names{font
 .page p em,.page small em{font-style:normal !important;}
 .cel-outro .cel-end{font-family:var(--font-body),'Work Sans',sans-serif !important; font-style:normal !important; font-size:inherit; line-height:inherit; margin:26px 0 34px;}
 .cel-outro .cel-end{color:var(--ink) !important;}
+.church-card .k,.info-cell .k{font-family:var(--font-heading),'Cormorant Garamond',serif !important; font-variant:normal !important; text-transform:none !important; font-weight:500 !important; font-size:22px !important; letter-spacing:.04em !important;}

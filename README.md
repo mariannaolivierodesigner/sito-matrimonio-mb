@@ -17,22 +17,23 @@ npx serve .
 
 e aprire l'indirizzo che compare nel terminale.
 
-## Area riservata (dashboard)
+## Area riservata (export dati)
 
-Non è raggiungibile dal menu pubblico (di proposito): si apre dal link "Area riservata" in fondo al menu
-oppure dall'indirizzo diretto `https://[tuo-dominio]/#area-riservata-mb`.
+Non è più raggiungibile dal menu (rimosso di proposito, per non renderla visibile agli invitati).
+Si apre solo con l'indirizzo diretto:
+
+`https://[tuo-dominio]/#area-riservata-mb`
 
 Codice di accesso: `sposi2027`
 
-Dopo il codice gli sposi vedono la dashboard: conteggi (confermati, bambini, intolleranze, alloggi, canzoni),
-le tabelle di RSVP / alloggio / canzoni, i pulsanti per aprire i fogli Google e scaricare i CSV.
-I dati vengono letti dal Google Sheet tramite lo script in `apps-script/Code.gs` (vedi le istruzioni in cima al file:
-incollare il codice, aggiungere la proprietà `ADMIN_PASSWORD` e fare "Nuova versione" della distribuzione).
-Se lo script non è ancora aggiornato la dashboard mostra un avviso e restano disponibili i link ai fogli.
+Da lì si possono esportare in Excel le risposte raccolte (RSVP, alloggio, canzoni).
 
-**Nota sulla sicurezza**: il controllo del codice nel sito è fatto in JavaScript; la lettura dei dati dal foglio
-è invece protetta dalla password salvata nello script Google (ADMIN_PASSWORD), quindi senza quella password
-i dati non vengono restituiti.
+**Nota sulla sicurezza**: questo è un sito statico, senza un vero server — qualsiasi controllo fatto
+in JavaScript (compreso questo codice) può in teoria essere aggirato da qualcuno che sa dove guardare
+nel codice sorgente. Il codice è "nascosto" tramite hash (non compare in chiaro), e l'indirizzo non è
+linkato da nessuna parte del sito, il che rende la pagina praticamente introvabile per un invitato
+normale — ma non è una protezione di livello bancario. Per dati davvero sensibili in futuro servirebbe
+un vero backend con autenticazione.
 
 ## Collegare Google Sheets (raccolta dati condivisa)
 

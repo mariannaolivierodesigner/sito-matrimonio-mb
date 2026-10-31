@@ -47,7 +47,7 @@
 <!-- ============ HOME ============ -->
 <section class="page active" id="page-home">
   <div class="hero">
-    <div class="hero-bg"></div>
+    <div class="hero-bg"><video class="hero-video" poster="hero-poster.jpg" autoplay muted loop playsinline preload="auto" disablepictureinpicture aria-hidden="true"><source src="hero-video.mp4" type="video/mp4"><source src="hero-video.webm" type="video/webm"></video></div>
     <div class="hero-content">
       <span class="hero-date">28.08.2027</span>
       <h1 class="hero-names">Marco &amp; Benedetta</h1>
@@ -383,43 +383,20 @@
 
 <!-- ============ ADMIN (riservato) ============ -->
 <section class="page" id="page-admin">
-  <div class="wrap" style="padding-top:150px; padding-bottom:110px;">
+  <div class="wrap" style="padding-top:150px;">
     <a href="#" class="back-link" onclick="go('home');return false;">&larr; Home</a>
     <div class="gate" id="adminGate">
       <span class="eyebrow">Area riservata</span>
-      <h2 style="margin-bottom:10px;">Accesso sposi</h2>
-      <form id="adminForm" novalidate style="text-align:left; margin-top:26px;">
-        <div class="field"><label for="adminCode">Codice di accesso</label><input type="password" id="adminCode" autocomplete="current-password"></div>
-        <p class="err" id="adminErr" hidden>Codice non corretto. Riprova.</p>
-        <button class="btn primary" type="submit">Entra</button>
-      </form>
+      <h2 style="margin-bottom:24px;">Accesso sposi</h2>
+      <div class="field"><input type="text" id="adminCode" placeholder="Codice di accesso"></div>
+      <button class="btn primary" onclick="checkAdmin()">Entra</button>
     </div>
-    <div id="dash" hidden>
-      <div class="section-head" style="margin-bottom:34px;"><span class="eyebrow">Area riservata</span><h2 style="font-size:34px;">Le vostre risposte</h2></div>
-      <div class="dash-note" id="dashNote" hidden></div>
-      <div class="stats" id="stats"></div>
-
-      <h3 class="dash-h">Conferme di partecipazione</h3>
-      <div class="tablewrap"><table><thead id="thr"></thead><tbody id="tbr"></tbody></table></div>
-
-      <h3 class="dash-h">Richieste di alloggio</h3>
-      <div class="tablewrap"><table><thead id="thh"></thead><tbody id="tbh"></tbody></table></div>
-
-      <h3 class="dash-h">Canzoni proposte</h3>
-      <div class="tablewrap"><table><thead id="ths"></thead><tbody id="tbs"></tbody></table></div>
-
-      <h3 class="dash-h">Fogli Google</h3>
-      <div class="dbtns">
-        <a class="btn" target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/1YQY0rYAL9J-CS8NgN-owD5-QWXhxSBp8z-e16K-9tDw/edit#gid=0">Apri conferme (RSVP)</a>
-        <a class="btn" target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/1YQY0rYAL9J-CS8NgN-owD5-QWXhxSBp8z-e16K-9tDw/edit#gid=69812800">Apri richieste alloggio</a>
-        <a class="btn" target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/1YQY0rYAL9J-CS8NgN-owD5-QWXhxSBp8z-e16K-9tDw/edit#gid=363448543">Apri canzoni</a>
-      </div>
-      <h3 class="dash-h" style="margin-top:34px;">Scarica</h3>
-      <div class="dbtns">
-        <button class="btn" type="button" data-csv="rsvp">CSV conferme</button>
-        <button class="btn" type="button" data-csv="stay">CSV alloggio</button>
-        <button class="btn" type="button" data-csv="songs">CSV canzoni</button>
-      </div>
+    <div class="admin-panel" id="adminPanel" style="display:none;">
+      <div class="section-head"><span class="eyebrow">Area riservata</span><h2 style="font-size:30px;">Dati raccolti</h2></div>
+      <div class="admin-row"><div><div>Conferme partecipazione (RSVP)</div></div><a class="btn" target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/1YQY0rYAL9J-CS8NgN-owD5-QWXhxSBp8z-e16K-9tDw/edit#gid=0">Apri</a></div>
+      <div class="admin-row"><div><div>Richieste alloggio</div></div><a class="btn" target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/1YQY0rYAL9J-CS8NgN-owD5-QWXhxSBp8z-e16K-9tDw/edit#gid=69812800">Apri</a></div>
+      <div class="admin-row"><div><div>Canzoni proposte</div></div><a class="btn" target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/1YQY0rYAL9J-CS8NgN-owD5-QWXhxSBp8z-e16K-9tDw/edit#gid=363448543">Apri</a></div>
+      <div class="status-msg" id="adminStatus" style="margin-top:30px;">Vuoi comunque un'esportazione di prova dal browser che stai usando ora? <a href="#" onclick="exportData('rsvp');return false;" style="text-decoration:underline;">RSVP</a> · <a href="#" onclick="exportData('stay');return false;" style="text-decoration:underline;">Alloggio</a> · <a href="#" onclick="exportData('song');return false;" style="text-decoration:underline;">Canzoni</a></div>
     </div>
   </div>
 </section>

@@ -601,3 +601,10 @@ body.lock{overflow:hidden;}
 .mg-links a:hover{border-color:var(--accent-deep); background:var(--accent-deep); color:#fff;}
 .cd-wrap{padding-top:70px;}
 @media(max-width:560px){.menu-guide{padding-top:70px;} .mg-links a{font-size:15px; padding:9px 18px;}}
+/* guida al menu: testo a sinistra, foto a destra */
+.menu-guide.location-teaser{max-width:1180px; padding:60px 40px 40px; text-align:left;}
+.menu-guide .loc-script{margin-left:-4px;}
+.menu-guide p{margin:0 0 30px; max-width:440px;}
+.menu-guide .mg-links{justify-content:flex-start;}
+.menu-guide .art-ph{background-image:url('couple-pink.jpg') !important; background-size:cover; background-position:center 25%;}
+@media(max-width:840px){.menu-guide.location-teaser{padding:40px 22px 40px; text-align:center;} .menu-guide p{margin-left:auto; margin-right:auto;} .menu-guide .mg-links{justify-content:center;} .menu-guide .location-media{order:2;} .menu-guide .location-text{order:1;}}

@@ -435,3 +435,13 @@ body:has(#page-home.active){padding-bottom:0;}
   #program .tl-dot::after{top:42px;}
 }
 #program, #program .day-item{border:0 !important;}
+
+/* HERO: la partecipazione sopra il video */
+.sr-only{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap;}
+.hero-inv{position:relative; z-index:5; display:block; height:auto; margin-top:30px;
+  width:min(50vw, calc((100vh - 200px) * 1.4), 900px);
+  width:min(50vw, calc((100dvh - 200px) * 1.4), 900px);
+  box-shadow:0 18px 60px rgba(15,12,10,.4);
+  opacity:0; animation:fadeUpMeta 1.3s var(--ease) forwards; animation-delay:.4s;}
+@media (max-width:820px){.hero-inv{width:min(90vw, calc((100dvh - 200px) * 1.4)); margin-top:24px;}}
+@media (max-width:560px){.hero-inv{width:92vw;}}

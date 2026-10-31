@@ -108,7 +108,9 @@ function buildRsvpRows(record){
       'Intolleranze': g.intolleranze,
       'Tipo': i===0 ? 'Ospite principale' : 'Partecipante aggiuntivo',
       'Numero bambini (nucleo)': i===0 ? record.numero_bambini : '',
-      'Età bambini (nucleo)': i===0 ? (record.eta_bambini||[]).join(', ') : ''
+      'Età bambini (nucleo)': i===0 ? (record.eta_bambini||[]).join(', ') : '',
+      'Numero bambini': i===0 ? record.numero_bambini : '',
+      'Età bambini': i===0 ? (record.eta_bambini||[]).join(', ') : ''
     });
   });
   return rows;
@@ -319,46 +321,106 @@ document.getElementById('songForm').addEventListener('submit', async (e)=>{
 });
 updateSongCounter();
 
-/* ============ ADMIN ============ */
+/* ============ ADMIN / DASHBOARD ============ */
 const ADMIN_CODE_HASH = '2b45742045267f2b33a36cda1052dc01cad50fa1f9f1d5a4bde63487adf38058';
 async function sha256Hex(text){
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
   return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
 }
-async function checkAdmin(){
-  const code = document.getElementById('adminCode').value;
-  const hash = await sha256Hex(code);
-  if(hash === ADMIN_CODE_HASH){
-    document.getElementById('adminGate').style.display='none';
-    document.getElementById('adminPanel').style.display='block';
-    refreshCounts();
-  } else {
-    document.getElementById('adminCode').style.borderColor = '#c0605a';
-  }
-}
-async function refreshCounts(){
-  /* i contatori locali non sono più mostrati: i dati veri sono nel Google Sheet */
-}
-async function exportData(type){
-  const statusEl = document.getElementById('adminStatus');
-  statusEl.textContent = 'Preparazione del file in corso…';
+const esc = s => String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let DASH = {rsvp:[], stay:[], songs:[]};
+
+/* legge i dati dal Google Sheet tramite lo script (stesso indirizzo usato per l'invio dei moduli) */
+async function loadDashData(pw){
   try{
-    const records = await listRecords(type);
-    if(records.length===0){ statusEl.textContent='Nessun dato ancora disponibile per questa esportazione.'; return; }
-    let rows = [];
-    if(type==='rsvp'){
-      records.forEach(r=>{ rows.push(...buildRsvpRows(r)); });
-    } else if(type==='stay'){
-      records.forEach(r=>{ rows.push(...buildStayRows(r)); });
-    } else if(type==='song'){
-      records.forEach(r=>{ rows.push(...buildSongRows(r)); });
-    }
-    const ws = XLSX.utils.json_to_sheet(rows);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, type);
-    XLSX.writeFile(wb, 'matrimonio_'+type+'_'+Date.now()+'.xlsx');
-    statusEl.textContent = 'File scaricato correttamente.';
-  }catch(err){
-    statusEl.textContent = "Errore durante l'esportazione. Riprova.";
+    const res = await fetch(SHEET_WEBHOOK_URL+'?action=read&pw='+encodeURIComponent(pw));
+    const j = await res.json();
+    if(j.error) return {ok:false, reason:'auth'};
+    DASH = {rsvp:j.rsvp||[], stay:j.stay||[], songs:j.songs||[]};
+    return {ok:true};
+  }catch(e){
+    return {ok:false, reason:'net'};
   }
 }
+const val = (row, ...starts) => {
+  for(const s of starts){
+    const k = Object.keys(row).find(k=>k.toLowerCase().startsWith(s.toLowerCase()));
+    if(k && row[k]!=='' && row[k]!=null) return row[k];
+  }
+  return '';
+};
+const NO_INTOLL = /^(nessuna|nessuno|nessun|no|niente|nulla|non ci sono|non ho|n\/?a|none|nothing|nil|-+|\/+|\.+)\.?$/i;
+function yesNo(v){ return /^s[iì]/i.test(String(v).trim()); }
+
+function renderDash(){
+  const R = DASH.rsvp;
+  const yes = R.filter(p=>yesNo(val(p,'Partecipa'))).length;
+  const no = R.filter(p=>String(val(p,'Partecipa')).trim()!=='' && !yesNo(val(p,'Partecipa'))).length;
+  const kids = R.reduce((n,p)=>n+(parseInt(val(p,'Numero bambini'))||0),0);
+  const intol = R.filter(p=>{ const v=String(val(p,'Intolleranze')).trim(); return v && !NO_INTOLL.test(v); }).length;
+  const stats = [['Confermati',yes],['Non ci saranno',no],['Risposte totali',R.length],['Bambini',kids],['Intolleranze',intol],['Richieste alloggio',DASH.stay.length],['Canzoni',DASH.songs.length]];
+  document.getElementById('stats').innerHTML = stats.map(([k,v])=>`<div class="stat"><b>${v}</b><span>${esc(k)}</span></div>`).join('');
+
+  const head = cols => '<tr>'+cols.map(c=>`<th>${esc(c)}</th>`).join('')+'</tr>';
+  const empty = (n,msg) => `<tr><td colspan="${n}" class="empty-cell">${esc(msg)}</td></tr>`;
+
+  document.getElementById('thr').innerHTML = head(['Nome','Presenza','Intolleranze','Tipo','Bambini']);
+  document.getElementById('tbr').innerHTML = R.length ? R.map(p=>{
+    const ok = yesNo(val(p,'Partecipa'));
+    const kn = val(p,'Numero bambini'), ka = val(p,'Età bambini');
+    const kidsTxt = kn && String(kn)!=='0' ? (kn + (ka?` (${ka})`:'')) : '';
+    return `<tr><td class="tn" data-l="Nome">${esc(val(p,'Nome'))} ${esc(val(p,'Cognome'))}</td>
+      <td data-l="Presenza"><span class="pill ${ok?'':'no'}">${ok?'Sì':'No'}</span></td>
+      <td class="opt" data-l="Intolleranze">${esc(val(p,'Intolleranze'))}</td>
+      <td class="opt" data-l="Tipo">${esc(val(p,'Tipo'))}</td>
+      <td class="opt" data-l="Bambini">${esc(kidsTxt)}</td></tr>`;
+  }).join('') : empty(5,'Nessuna risposta ancora.');
+
+  document.getElementById('thh').innerHTML = head(['Nome','Città','Persone','Notti','Date','Note']);
+  document.getElementById('tbh').innerHTML = DASH.stay.length ? DASH.stay.map(p=>{
+    const dates = [val(p,'Arrivo'),val(p,'Partenza')].filter(Boolean).join(' → ');
+    return `<tr><td class="tn" data-l="Nome">${esc(val(p,'Nome e cognome','Nome'))}</td>
+      <td class="opt" data-l="Città">${esc(val(p,'Città'))}</td>
+      <td class="opt" data-l="Persone">${esc(val(p,'Numero persone'))}</td>
+      <td class="opt" data-l="Notti">${esc(val(p,'Notti'))}</td>
+      <td class="opt" data-l="Date">${esc(dates)}</td>
+      <td class="opt" data-l="Note">${esc(val(p,'Note'))}</td></tr>`;
+  }).join('') : empty(6,'Nessuna richiesta ancora.');
+
+  document.getElementById('ths').innerHTML = head(['Titolo','Artista','Da parte di','Messaggio']);
+  document.getElementById('tbs').innerHTML = DASH.songs.length ? DASH.songs.map(p=>`<tr>
+      <td class="tn" data-l="Titolo">${esc(val(p,'Titolo'))}</td>
+      <td data-l="Artista">${esc(val(p,'Artista'))}</td>
+      <td data-l="Da parte di">${esc(val(p,'Nome'))}</td>
+      <td class="opt" data-l="Messaggio">${esc(val(p,'Messaggio'))}</td></tr>`).join('') : empty(4,'Nessuna canzone ancora.');
+}
+
+document.getElementById('adminForm').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const pw = document.getElementById('adminCode').value;
+  const err = document.getElementById('adminErr');
+  if(await sha256Hex(pw) !== ADMIN_CODE_HASH){ err.hidden=false; return; }
+  err.hidden=true;
+  const r = await loadDashData(pw);
+  document.getElementById('adminGate').hidden = true;
+  document.getElementById('dash').hidden = false;
+  const note = document.getElementById('dashNote');
+  if(!r.ok){
+    note.hidden = false;
+    note.textContent = "Non riusciamo a leggere i dati in questo momento. Potete comunque aprire i fogli Google qui sotto: le risposte sono tutte lì.";
+  } else note.hidden = true;
+  renderDash();
+  window.scrollTo(0,0);
+});
+
+document.querySelectorAll('[data-csv]').forEach(btn=>btn.addEventListener('click',()=>{
+  const k = btn.dataset.csv, rows = DASH[k]||[];
+  if(!rows.length){ return; }
+  const cols = Object.keys(rows[0]);
+  const lines = [cols, ...rows.map(r=>cols.map(c=>r[c]))];
+  const csv = lines.map(r=>r.map(c=>`"${String(c==null?'':c).replace(/"/g,'""')}"`).join(';')).join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob(['﻿'+csv],{type:'text/csv'}));
+  a.download = {rsvp:'conferme',stay:'alloggio',songs:'canzoni'}[k]+'-matrimonio.csv';
+  document.body.appendChild(a); a.click(); a.remove();
+}));

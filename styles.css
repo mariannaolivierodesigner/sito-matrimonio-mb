@@ -621,7 +621,7 @@ footer *{color:inherit;}
 .mag-w{display:block;line-height:0;margin:0 0 20px;text-align:inherit}
 .mag{display:inline-block;height:calc(var(--mh,1) * 112px);width:auto;max-width:100%;color:var(--accent);overflow:visible;vertical-align:top}
 .schedule-band .mag-w{margin-bottom:26px}
-.schedule-band .mag{color:var(--bg)}
+.schedule-band .mag{color:var(--champagne)}
 .mag.dr path{stroke-dasharray:1;stroke-dashoffset:1}
 .mag .mf{opacity:0}
 .location-text .mag-w,.menu-guide .mag-w{margin-bottom:22px}

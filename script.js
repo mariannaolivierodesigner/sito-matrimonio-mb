@@ -110,28 +110,7 @@ function buildSongRows(r){
     'Inviato il': r.inviato_il, 'Nome': r.nome, 'Titolo': r.titolo, 'Artista': r.artista, 'Messaggio': r.messaggio
   }];
 }
-function updateCountdown(){
-  const now = new Date();
-  let diff = WEDDING_DATE - now;
-  if(diff<0) diff=0;
-  const d = Math.floor(diff/86400000);
-  const h = Math.floor(diff%86400000/3600000);
-  const m = Math.floor(diff%3600000/60000);
-  const s = Math.floor(diff%60000/1000);
-  setDigit('cd-d', d);
-  setDigit('cd-h', String(h).padStart(2,'0'));
-  setDigit('cd-m', String(m).padStart(2,'0'));
-  setDigit('cd-s', String(s).padStart(2,'0'));
-}
-function setDigit(id, val){
-  const el = document.getElementById(id);
-  if(el.textContent !== String(val)){
-    el.textContent = val;
-    el.classList.remove('tick'); void el.offsetWidth; el.classList.add('tick');
-  }
-}
-updateCountdown();
-setInterval(updateCountdown,1000);
+
 
 /* ============ STORAGE HELPERS ============
    Se il sito gira dentro Claude (claude.ai) usa il database persistente

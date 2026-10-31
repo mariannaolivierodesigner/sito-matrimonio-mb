@@ -71,7 +71,18 @@ observeReveals();
 })();
 
 /* ============ COUNTDOWN ============ */
-const WEDDING_DATE = new Date('2027-08-28T16:30:00');
+const WEDDING_DATE = new Date('2027-08-28T16:30:00+02:00');
+(function(){
+  const ids=['cd-d','cd-h','cd-m','cd-s'],els=ids.map(i=>document.getElementById(i));
+  if(!els[0])return;
+  let last=[];
+  function tick(){
+    let ms=WEDDING_DATE-new Date();if(ms<0)ms=0;
+    const s=Math.floor(ms/1000),v=[Math.floor(s/86400),Math.floor(s%86400/3600),Math.floor(s%3600/60),s%60];
+    v.forEach((n,i)=>{const t=i===0?String(n):String(n).padStart(2,'0');if(last[i]!==t){els[i].textContent=t;if(last[i]!==undefined){els[i].classList.remove('tick');void els[i].offsetWidth;els[i].classList.add('tick')}last[i]=t}});
+  }
+  tick();setInterval(tick,1000);
+})();
 
 /* ============ COLLEGAMENTO A GOOGLE SHEETS ============
    Un solo foglio Google, con 3 schede (RSVP / Alloggio / Canzoni) e un solo

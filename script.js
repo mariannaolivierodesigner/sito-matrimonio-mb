@@ -255,7 +255,7 @@ document.getElementById('rsvpForm').addEventListener('submit', async (e)=>{
     document.getElementById('extraGuests').innerHTML='';
     document.getElementById('childAgesField').style.display='none';
     const anySi=guests.some(g=>g.partecipa==='Sì');
-    openModal("Grazie", anySi ? "Siamo felicissimi di sapere che ci sarete.\nIl nostro giorno sarà ancora più speciale con voi accanto." : "Abbiamo ricevuto la tua risposta. Grazie per avercelo fatto sapere.");
+    openModal("Grazie", anySi ? "Siamo felicissimi di sapere che ci sarete." : "Abbiamo ricevuto la tua risposta. Grazie per avercelo fatto sapere.");
     statusEl.textContent = sheetResult.ok ? '' : ('Salvato, ma non inviato al Google Sheet: '+sheetResult.reason);
   }catch(err){
     statusEl.textContent = 'Non è stato possibile salvare la risposta. Riprova tra poco.';

@@ -539,3 +539,6 @@ body.lock{overflow:hidden;}
 .replay-pill[hidden]{display:none}
 .info-split{display:block;}
 .info-split-text{max-width:620px;}
+.info-teaser{padding-top:0;}
+.info-teaser .art-ph{background-image:none !important; background:var(--bg-soft);}
+@media(max-width:840px){.info-teaser .location-photo{order:-1;}}

@@ -569,3 +569,7 @@ body.lock{overflow:hidden;}
 @media(max-width:560px){#program .day-item{grid-template-columns:74px 40px 1fr;} #program .tl-dot svg{padding:3px;}}
 #program .day-time{padding-bottom:44px;} #program .day-what{padding-bottom:44px;}
 @media(max-width:560px){#program .day-time{padding-bottom:34px;} #program .day-what{padding-bottom:34px;}}
+.form-card::before{inset:-72px; --cs:128px;}
+.form-card{padding:84px 56px 96px;}
+@media(max-width:640px){.form-card{padding:60px 24px 72px;} .form-card::before{inset:-40px -12px; --cs:80px;}}
+.form-card{margin-top:56px; margin-bottom:40px;}

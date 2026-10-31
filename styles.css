@@ -573,3 +573,11 @@ body.lock{overflow:hidden;}
 .form-card{padding:84px 56px 96px;}
 @media(max-width:640px){.form-card{padding:60px 24px 72px;} .form-card::before{inset:-40px -12px; --cs:80px;}}
 .form-card{margin-top:56px; margin-bottom:40px;}
+/* Gift: IBAN leggibile su mobile */
+@media(max-width:640px){
+  .iban-box{padding:26px 22px !important; gap:16px;}
+  .iban-row{flex-direction:column; align-items:flex-start; gap:4px; padding-bottom:14px;}
+  .iban-row .k{font-size:11px; letter-spacing:.14em; text-transform:uppercase;}
+  .iban-row .v{font-size:18px !important; line-height:1.35; text-align:left !important; width:100%; overflow-wrap:anywhere; word-break:normal;}
+  .iban-row .v[data-edit="gift-iban"]{font-size:16.5px !important; letter-spacing:.02em; word-spacing:.12em; overflow-wrap:normal;}
+}

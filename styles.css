@@ -493,3 +493,7 @@ h1,h2,h3,.mobile-menu a,.church-card h3,.info-cell h3,.modal h3,.hero-names{font
 
 /* nome del parcheggio: come i nomi degli hotel nel sito di Antonio e Francesco (h3 Cormorant SC 22px) */
 .place-name{display:block; font-family:'Cormorant SC','Cormorant Garamond',Georgia,serif; font-weight:400; font-size:22px; letter-spacing:.07em; line-height:1.5; color:var(--ink); margin-bottom:4px;}
+
+/* respiro sotto l'ultima sezione di ogni pagina interna (non attaccata al footer) */
+.page:not(#page-home) > .wrap{padding-bottom:110px;}
+@media(max-width:640px){.page:not(#page-home) > .wrap{padding-bottom:90px;}}

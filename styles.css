@@ -250,6 +250,10 @@ header.site-nav.on-hero .rsvp-pill:hover{background:#fff; color:var(--accent-dee
 }
 .location-text h2{font-size:clamp(26px,3.4vw,38px); line-height:1.25; margin-bottom:22px; font-weight:400;}
 .location-text p{max-width:440px; margin-bottom:34px;}
+.loc-head{margin-bottom:26px;}
+.loc-eyebrow{font-variant-caps:small-caps; text-transform:lowercase; font-size:clamp(22px,2.6vw,30px); letter-spacing:.07em; line-height:1.2; margin:0 0 4px; font-weight:400; color:var(--accent-deep);}
+.loc-script{display:block; font-size:clamp(58px,7.4vw,92px); line-height:1.02; color:var(--accent); margin:0 0 6px -4px;}
+.loc-sub{display:block; font-size:13px; letter-spacing:.24em; text-transform:uppercase; font-weight:500; color:var(--accent-deep);}
 
 /* ============ INFO UTILI: dress code + foto ============ */
 .info-split{

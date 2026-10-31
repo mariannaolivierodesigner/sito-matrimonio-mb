@@ -609,7 +609,7 @@ body.lock{overflow:hidden;}
 .menu-guide .art-ph{background-image:url('couple-pink.jpg') !important; background-size:cover; background-position:center 25%;}
 @media(max-width:840px){.menu-guide.location-teaser{padding:40px 22px 40px; text-align:center;} .menu-guide p{margin-left:auto; margin-right:auto;} .menu-guide .mg-links{justify-content:center;} .menu-guide .location-media{order:2;} .menu-guide .location-text{order:1;}}
 /* countdown su fascia Dusty Sage */
-.cd-band{background:var(--champagne); margin-top:60px;}
+.cd-band{background:transparent; margin-top:60px;}
 .cd-band .cd-wrap{padding-top:90px; padding-bottom:140px;}
 .cd-band .countdown .lab{color:var(--ink); opacity:.78;}
 @media(max-width:560px){.cd-band .cd-wrap{padding-top:64px; padding-bottom:120px;}}
